@@ -16,6 +16,9 @@
       Tu będzie kalendarz hufca generowany ze strony hufca ...
     </v-ons-list-title>
 
+
+    <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=imlnjv9e13vae9jqjqfikpfals%40group.calendar.google.com&amp;color=%235F6B02&amp;ctz=Europe%2FWarsaw" style="border-width:0" width="450" height="600" frameborder="0" scrolling="yes"></iframe>
+
   </v-ons-page>
 </template>
 
@@ -55,5 +58,9 @@ ons-list-item, ons-card {
 
 #MainTitle{
   text-align: center;
+}
+
+iframe{
+  margin: auto, auto;
 }
 </style>

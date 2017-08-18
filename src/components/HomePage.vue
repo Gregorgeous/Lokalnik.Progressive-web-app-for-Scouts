@@ -107,6 +107,13 @@ export default {
     meetWithDCSLink:function () {
       this.pageStack.push(meetWithDCS);
     }
+  },
+  components: {
+    'keys-finder': keysFinder,
+    'venue-events': venueEvents,
+    'book-venue': bookVenue,
+    'venue-calendar': venueCalendar,
+    'meet-with-dcs': meetWithDCS
   }
 }
 </script>

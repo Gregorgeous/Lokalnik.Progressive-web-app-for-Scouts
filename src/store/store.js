@@ -7,6 +7,10 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   state: {
     mojaArray: ['jestemSobieArrayką'],
-    pageStack: [homePage]
+    pageStack: [homePage],
+    currentKeyHolders: [
+      {'name': 'Paweł', 'surname': "Błasiak"},
+      {'name': 'Filip', 'surname': "Stojanow"}
+    ]
   }
 })

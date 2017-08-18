@@ -13,9 +13,32 @@
     </div>
 
     <v-ons-list-title id="MainTitle">
-      Chcesz zarezerwowac lokal hufca
+      Wybierz co chcesz zrobic
     </v-ons-list-title>
 
+    <v-ons-list-item class="switcher">
+      <label for="switch1">
+        Chcę zarezerwowac lokal hufca
+      </label>
+      <div class="right">
+          <v-ons-switch input-id="switch1" @change="showIframe('1',$event)">
+          </v-ons-switch>
+      </div>
+    </v-ons-list-item>
+
+    <iframe  v-show="switcher1" src="https://docs.google.com/forms/d/1LlSxGIdxIRxrU6CVlKe2qIz3Fn8iq6Z-NBVTqg322M4/viewform?embedded=true" width="350" height="1320" frameborder="2" marginheight="0" marginwidth="0">Ładowanie...</iframe>
+
+    <v-ons-list-item class="switcher">
+      <label for="switch2">
+        Chcę zarezerwowac rzutnik
+      </label>
+      <div class="right">
+          <v-ons-switch input-id="switch2" @change="showIframe('2',$event)">
+          </v-ons-switch>
+      </div>
+    </v-ons-list-item>
+
+    <iframe v-show="switcher2" src="https://docs.google.com/forms/d/1Ik9fA8FpX8MMTbYdvT5RB0tEkwC84_hn-V14pH6nlQc/viewform?embedded=true" width="350" height="1320" frameborder="2" marginheight="0" marginwidth="0">Ładowanie...</iframe>
   </v-ons-page>
 </template>
 
@@ -25,9 +48,21 @@ export default {
   template: '#bookVenue',
   data () {
     return {
-      msg: 'Lokalnik'
+      msg: 'Lokalnik',
+      switcher1: false,
+      switcher2: false
     }
-  }
+  },
+  methods: {
+    showIframe(index,event) {
+      if (index == '1') {
+        this.switcher1 = event.value;
+      }
+      if (index == '2') {
+        this.switcher2 = event.value;
+      }
+    }
+    }
 }
 </script>
 
@@ -36,7 +71,9 @@ export default {
 .header {
   text-align: center;
 }
-
+.switcher{
+  width: 90%;
+}
 img {
   max-width: 300px;
 }
