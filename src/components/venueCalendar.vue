@@ -1,25 +1,14 @@
 <template id="venueCalendar">
-  <v-ons-page>
+  <div>
 
-    <v-ons-toolbar class="home-toolbar">
-      <div class="left">
-        <v-ons-back-button>homePage</v-ons-back-button>
-      </div>
-      <div class="center">{{ msg }}</div>
-    </v-ons-toolbar>
-
-    <div class="header">
-      <img src="../assets/zoliborz_logo.png" alt="vue-logo">
-    </div>
-
-    <v-ons-list-title id="MainTitle">
-      Tu będzie kalendarz hufca generowany ze strony hufca ...
-    </v-ons-list-title>
+    <h4 class="text-xs-center">
+      Kalendarz hufca generowany ze strony hufca:
+    </h4 >
 
 
-    <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=imlnjv9e13vae9jqjqfikpfals%40group.calendar.google.com&amp;color=%235F6B02&amp;ctz=Europe%2FWarsaw" style="border-width:0" width="450" height="600" frameborder="0" scrolling="yes"></iframe>
+    <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=imlnjv9e13vae9jqjqfikpfals%40group.calendar.google.com&amp;color=%235F6B02&amp;ctz=Europe%2FWarsaw" style="border-width:0" width="350" height="600" frameborder="0" scrolling="yes"></iframe>
 
-  </v-ons-page>
+  </div>
 </template>
 
 <script>

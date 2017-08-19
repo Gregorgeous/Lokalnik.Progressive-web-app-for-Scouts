@@ -1,22 +1,9 @@
 <template id="keysFinder">
-  <v-ons-page>
-
-    <v-ons-toolbar class="home-toolbar">
-      <div class="left">
-        <v-ons-back-button>homePage</v-ons-back-button>
-      </div>
-      <div class="center">{{ msg }}</div>
-    </v-ons-toolbar>
-
-    <div class="header">
-      <img src="../assets/zoliborz_logo.png" alt="vue-logo">
-    </div>
-
-    <v-ons-list>
-    <v-ons-list-title id="MainTitle">
+  <div>
+    <h3 class="text-xs-center title mt-2" >
       Skontaktuj się z osobami które mają klucz do hufca.
       Obecnie są to:
-    </v-ons-list-title>
+    </h3>
     <currentKeyHolders v-for="keyHolder in keyHolders"
     :key="keyHolder.name"
     :keyHolderName = 'keyHolder.name'
@@ -24,9 +11,16 @@
     </currentKeyHolders>
 
 
+    <v-bottom-nav absolute value="true" class="transparent">
+          <v-btn  >
+            <span class="body-2">Ja też mam klucze </span>
+          </v-btn>
+          <v-btn  >
+            <span class="body-2">Już nie mam kluczy </span>
+          </v-btn>
+        </v-bottom-nav>
 
-  </v-ons-list>
-  <v-ons-bottom-toolbar>
+  <!-- <v-ons-bottom-toolbar>
     <v-ons-row>
       <v-ons-col>
         <v-ons-button modifier="quiet">Ja też mam klucze</v-ons-button>
@@ -35,8 +29,8 @@
         <v-ons-button>Nie mam już kluczy</v-ons-button>
       </v-ons-col>
     </v-ons-row>
-  </v-ons-bottom-toolbar>
-</v-ons-page>
+  </v-ons-bottom-toolbar> -->
+</div>
 </template>
 
 <script>

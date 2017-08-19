@@ -1,119 +1,99 @@
 <template id="homePage">
-  <v-ons-page>
-    <v-ons-toolbar class="home-toolbar">
-      <div class="center">{{ msg }}</div>
-    </v-ons-toolbar>
+  <div>
+    <h3 class='mt-3 mb-0' id="MainTitle" >Wybierz co chcesz zrobic:</h3>
+    <v-divider ></v-divider>
+    <v-container fluid grid-list-md class="grey lighten-4 pr-4">
+      <v-layout row wrap>
 
-    <div class="header">
-      <img src="../assets/zoliborz_logo.png" alt="vue-logo">
-    </div>
+        <v-flex xs6 class="ml-0">
+          <router-link tag='span' to='/keysfinder' >
+          <v-card style="cursor:pointer" @click="showBackButtonNow">
+            <v-card-title primary-title class="pb-0 text-xs-center">
+                <h3 class="headline mx-0">Sprawdz kto ma klucze do hufca</h3>
+            </v-card-title>
+            <v-card-media class="text-xs-center">
+              <i class="fa fa-key fa-5x mb-1 pb-2" aria-hidden="true"></i>
+            </v-card-media>
+          </v-card>
+          </router-link>
+        </v-flex>
 
-    <v-ons-list-title id="MainTitle">Wybierz co chcesz zrobic</v-ons-list-title>
-    <v-ons-row>
-      <v-ons-col>
-        <v-ons-card @click="keysFinderLink">
-          <div class="title">
-            Znajdz kto ma klucze do hufca
-          </div>
-          <div class="content">
-            <i class="fa fa-key fa-5x" aria-hidden="true"></i>
-          </div>
-        </v-ons-card>
-      </v-ons-col>
-      <v-ons-col>
-        <v-ons-card @click="venueEventsLink">
-        <div class="title">
-          Wydarzenia w hufcu
-        </div>
-        <div class="content">
-          <i class="fa fa-comments-o fa-5x" aria-hidden="true"></i>
-        </div>
-        </v-ons-card>
-      </v-ons-col>
-    </v-ons-row>
-    <v-ons-row>
-      <v-ons-col>
-        <v-ons-card @click="bookVenueLink">
-          <div class="title">
-            Zarezerwuj lokal
-          </div>
-          <div class="content">
-            <i class="fa fa-calendar-plus-o fa-5x" aria-hidden="true"></i>
-          </div>
-        </v-ons-card>
-      </v-ons-col>
-      <v-ons-col>
-        <v-ons-card @click="venueCalendarLink">
-          <div class="title">
-            Kalendarz lokalu
-          </div>
-          <div class="content">
-            <i class="fa fa-calendar fa-5x" aria-hidden="true"></i>
-          </div>
-        </v-ons-card>
-      </v-ons-col>
-    </v-ons-row>
-    <v-ons-row>
-      <v-ons-col>
-      <v-ons-card @click="meetWithDCSLink">
-        <div class="title">
-          Mam sprawę do komendanta
-        </div>
-        <div class="content">
-          <i class="fa fa-address-card-o fa-5x" aria-hidden="true"></i>
-        </div>
-      </v-ons-card>
-    </v-ons-col>
-    </v-ons-row>
-  </v-ons-page>
+        <v-flex xs6 >
+          <router-link tag='span' to='/venueevents'>
+          <v-card style="cursor:pointer" @click="showBackButtonNow">
+            <v-card-title primary-title class="pb-0 text-xs-center">
+              <h3 class="headline mx-0">Sprawdz wydarzenia w lokalu hufcu</h3>
+            </v-card-title>
+            <v-card-media class="text-xs-center">
+              <i class="fa fa-comments-o fa-5x mb-1 pb-2" aria-hidden="true"></i>
+            </v-card-media>
+          </v-card>
+        </router-link>
+        </v-flex>
+
+        <v-flex xs6 >
+          <router-link tag='span' to='/bookvenue' >
+            <v-card style="cursor:pointer" @click="showBackButtonNow">
+            <v-card-title primary-title class="pb-0 text-xs-center">
+              <h3 class="headline mx-0">Zarezerwuj lokal</h3>
+            </v-card-title>
+            <v-card-media class="text-xs-center">
+              <i class="fa fa-calendar-plus-o fa-5x mb-1 pb-2" aria-hidden="true"></i>
+            </v-card-media>
+        </v-card>
+      </router-link>
+        </v-flex>
+
+        <v-flex xs6>
+          <router-link tag='span' to='/venuecalendar' >
+          <v-card style="cursor:pointer" @click="showBackButtonNow">
+            <v-card-title primary-title class="pb-0 text-xs-center">
+              <h3 class="headline mx-0">Kalendarz lokalu</h3>
+            </v-card-title>
+            <v-card-media class="text-xs-center">
+              <i class="fa fa-calendar fa-5x mb-1 pb-2" aria-hidden="true"></i>
+            </v-card-media>
+        </v-card>
+      </router-link>
+        </v-flex>
+
+        <v-flex xs12>
+          <router-link tag='span' to='/meetwithdcs'>
+            <v-card style="cursor:pointer" @click="showBackButtonNow">
+            <v-card-title primary-title class="pb-0 text-xs-center">
+              <h3 class="headline mx-0">Mam sprawę do komendanta</h3>
+            </v-card-title>
+            <v-card-media class="text-xs-center">
+              <i class="fa fa-address-card-o fa-5x mb-1 pb-2" aria-hidden="true"></i>
+            </v-card-media>
+          </v-card>
+        </router-link>
+        </v-flex>
+
+      </v-layout>
+    </v-container>
+  </div>
 </template>
 
 <script>
-import keysFinder from './keysFinder'
-import venueEvents from './venueEvents'
-import bookVenue from './bookVenue'
-import venueCalendar from './venueCalendar'
-import meetWithDCS from './meetWithDCS'
 
 export default {
   name: 'homePage',
   template: '#homePage',
   data () {
     return {
-      msg: 'Lokalnik'
+      msg: 'Lokalnik',
+      link: '/keysfinder'
     }
   },
   computed: {
-    myArray(){
-      return this.$store.state.mojaArray;
-    },
-    pageStack(){
-      return this.$store.state.pageStack;
-    }
   },
   methods: {
-    keysFinderLink:function () {
-      this.pageStack.push(keysFinder);
-    },
-    venueEventsLink:function () {
-      this.pageStack.push(venueEvents);
-    },
-    bookVenueLink:function () {
-      this.pageStack.push(bookVenue);
-    },
-    venueCalendarLink:function () {
-      this.pageStack.push(venueCalendar);
-    },
-    meetWithDCSLink:function () {
-      this.pageStack.push(meetWithDCS);
+    showBackButtonNow(){
+      this.$store.state.backBtnVisible = true;
     }
   },
   components: {
-    'keys-finder': keysFinder,
-    'venue-events': venueEvents,
-    'book-venue': bookVenue,
-    'venue-calendar': venueCalendar,
-    'meet-with-dcs': meetWithDCS
   }
 }
 </script>

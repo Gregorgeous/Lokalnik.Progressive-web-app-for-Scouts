@@ -1,22 +1,10 @@
 <template id="meetWithDCS">
-  <v-ons-page>
-
-    <v-ons-toolbar class="home-toolbar">
-      <div class="left">
-        <v-ons-back-button>homePage</v-ons-back-button>
-      </div>
-      <div class="center">{{ msg }}</div>
-    </v-ons-toolbar>
-
-    <div class="header">
-      <img src="../assets/zoliborz_logo.png" alt="vue-logo">
-    </div>
-
-    <v-ons-list-title id="MainTitle">
+  <div>
+    <h3 class="text-xs-center mt-2 px-4 headline">
       Masz sprawę do komendanta i chcesz się z nim spotkac na dyżurze
-    </v-ons-list-title>
-
-  </v-ons-page>
+    </h3>
+    
+  </div>
 </template>
 
 <script>

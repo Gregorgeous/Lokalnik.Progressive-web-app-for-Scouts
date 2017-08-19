@@ -1,22 +1,10 @@
 <template id="venueEvents">
-  <v-ons-page>
+  <div>
+    <h3 class="text-xs-center mt-2 px-4 headline">
+      Tu będą ładnie wyświetlac się eventy w lokalu hufca w obecnym tygodniu:
+    </h3>
 
-    <v-ons-toolbar class="home-toolbar">
-      <div class="left">
-        <v-ons-back-button>homePage</v-ons-back-button>
-      </div>
-      <div class="center">{{ msg }}</div>
-    </v-ons-toolbar>
-
-    <div class="header">
-      <img src="../assets/zoliborz_logo.png" alt="vue-logo">
-    </div>
-
-    <v-ons-list-title id="MainTitle">
-      Tu będą ładnie wyświetlac się eventy w lokalu hufca w obecnym tygodniu
-    </v-ons-list-title>
-
-  </v-ons-page>
+  </div>
 </template>
 
 <script>

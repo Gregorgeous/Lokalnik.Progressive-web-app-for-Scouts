@@ -11,6 +11,7 @@ export const store = new Vuex.Store({
     currentKeyHolders: [
       {'name': 'Paweł', 'surname': "Błasiak"},
       {'name': 'Filip', 'surname': "Stojanow"}
-    ]
+    ],
+    backBtnVisible: false
   }
 })

@@ -1,9 +1,18 @@
 <template id="main">
-    <v-ons-navigator swipeable
-    :page-stack="pageStack"
-    :pageStack="pageStack"
-    :proba="proba">
-    </v-ons-navigator>
+  <v-app>
+    <v-toolbar class="home-toolbar">
+        <router-link to='/' tag='span' class="ml-0" v-if="showBackBtn">
+          <v-toolbar-side-icon @click="hideBackBtn" >
+            <i class="fa fa-arrow-left fa-lg" aria-hidden="true" ></i>
+          </v-toolbar-side-icon>
+        </router-link>
+          <v-toolbar-title class="ml-2">{{ msg }}</v-toolbar-title>
+          <img class="ml-3 "style="max-height:80%" src="./assets/zoliborz_logo.png" alt="app-logo">
+    </v-toolbar>
+    <main>
+      <router-view ></router-view>
+  </main>
+  </v-app>
 </template>
 
 <script>
@@ -25,41 +34,13 @@ export default {
     }
   },
   computed:{
-    pageStack(){
-      return this.$store.state.pageStack
+    showBackBtn(){
+      return this.$store.state.backBtnVisible
     }
   },
   methods: {
-    keysFinderLink:function () {
-      // this.pageStack.push({
-      //   extends: keysFinder,
-      //   data() {
-      //     return {
-      //       toolbarInfo: {
-      //         backLabel: 'Home',
-      //         title: 'keysFinder'
-      //       }
-      //     }
-      //   }
-      // });
-      console.log('działam');
-      // console.log(this.$store.state.mojaArray);
-      // this.pageStack.push(keysFinding);
-    },
-    venueEventsLink:function () {
-      // $ons.notification.alert('Hello World!');
-      console.log('działam');
-    },
-    reserveVenueLink:function () {
-      // $ons.notification.alert('Hello World!');
-      console.log('działam');
-    },
-    venueCalendarLink:function () {
-      // $ons.notification.alert('Hello World!');
-      console.log('działam');
-    },
-    businessToChiefScoutLink:function () {
-      console.log('działam');
+    hideBackBtn(){
+      this.$store.state.backBtnVisible = false;
     }
   }
 }
