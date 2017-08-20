@@ -5,6 +5,7 @@ import ('./../node_modules/vuetify/dist/vuetify.min.css')
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App'
+import * as firebase from 'firebase'
 import {store} from './store/store'
 import Vuetify from 'vuetify'
 import router from './router'
@@ -21,7 +22,17 @@ new Vue({
   store: store,
   router,
   el: '#app',
-  render:h => h(App)
+  render:h => h(App),
+  created() {
+    //do something after creating vue instance
+    firebase.initializeApp({
+    apiKey: "AIzaSyALvp9YWh-VIIWlxB2w37QYtsl4vfoKlnk",
+    authDomain: "lokalnik-app.firebaseapp.com",
+    databaseURL: "https://lokalnik-app.firebaseio.com",
+    projectId: "lokalnik-app",
+    storageBucket: "lokalnik-app.appspot.com"
+    })
+  }
   // template: '<App/>',
   // components: { App }
 })

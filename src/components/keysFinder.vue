@@ -20,16 +20,6 @@
           </v-btn>
         </v-bottom-nav>
 
-  <!-- <v-ons-bottom-toolbar>
-    <v-ons-row>
-      <v-ons-col>
-        <v-ons-button modifier="quiet">Ja też mam klucze</v-ons-button>
-      </v-ons-col>
-      <v-ons-col v-if="show">
-        <v-ons-button>Nie mam już kluczy</v-ons-button>
-      </v-ons-col>
-    </v-ons-row>
-  </v-ons-bottom-toolbar> -->
 </div>
 </template>
 
@@ -45,7 +35,7 @@ export default {
   data () {
     return {
       msg: 'Lokalnik',
-      show: true // TODO: now is hard-coded, but we want it true when user's logged in and currently system indicates user has the keys ('currentKeyHolders' state in Store.js)
+      show: true // TODO: now it's hard-coded, but we want it true when user's logged in and currently system indicates user has the keys ('currentKeyHolders' state in Store.js)
     }
   },
   methods: {

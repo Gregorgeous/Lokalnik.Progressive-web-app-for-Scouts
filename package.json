@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "bootstrap-vue": "^0.22.1",
+    "firebase": "^4.3.0",
     "onsenui": "~2.5.1",
     "vue": "^2.4.0",
     "vue-onsenui": "~2.1.0",

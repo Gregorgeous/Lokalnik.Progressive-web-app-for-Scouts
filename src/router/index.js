@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import signin from '@/components/signin'
+import signup from '@/components/signup'
 import HomePage from '@/components/HomePage'
 import keysFinder from '@/components/keysFinder'
 import venueEvents from '@/components/venueEvents'
@@ -13,8 +15,18 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'signin',
+      component:signin
+    },
+    {
+      path: '/homepage',
       name: 'HomePage',
       component: HomePage
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: signup
     },
     {
       path: '/keysfinder',

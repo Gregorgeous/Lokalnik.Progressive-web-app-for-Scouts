@@ -1,6 +1,6 @@
 <template id="homePage">
   <div>
-    <h3 class='mt-3 mb-0' id="MainTitle" >Wybierz co chcesz zrobic:</h3>
+    <h3 class='mt-3 mb-0' id="MainTitle" >Wybierz co chcesz zrobić:</h3>
     <v-divider ></v-divider>
     <v-container fluid grid-list-md class="grey lighten-4 pr-4">
       <v-layout row wrap>
@@ -9,7 +9,7 @@
           <router-link tag='span' to='/keysfinder' >
           <v-card style="cursor:pointer" @click="showBackButtonNow">
             <v-card-title primary-title class="pb-0 text-xs-center">
-                <h3 class="headline mx-0">Sprawdz kto ma klucze do hufca</h3>
+                <h3 class="headline mx-0">Sprawdź kto ma klucze do hufca</h3>
             </v-card-title>
             <v-card-media class="text-xs-center">
               <i class="fa fa-key fa-5x mb-1 pb-2" aria-hidden="true"></i>
@@ -22,7 +22,7 @@
           <router-link tag='span' to='/venueevents'>
           <v-card style="cursor:pointer" @click="showBackButtonNow">
             <v-card-title primary-title class="pb-0 text-xs-center">
-              <h3 class="headline mx-0">Sprawdz wydarzenia w lokalu hufcu</h3>
+              <h3 class="headline mx-0">Sprawdź wydarzenia w lokalu hufcu</h3>
             </v-card-title>
             <v-card-media class="text-xs-center">
               <i class="fa fa-comments-o fa-5x mb-1 pb-2" aria-hidden="true"></i>
