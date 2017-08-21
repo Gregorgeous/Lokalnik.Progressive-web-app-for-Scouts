@@ -2,24 +2,38 @@
   <div>
   <v-container>
     <h4 class="text-sm-center">Zaloguj się do aplikacji</h4>
+    <form @submit.prevent='SignInUser'>
+
       <v-layout row>
         <v-flex xs12 sm6 offset-sm3>
           <v-text-field
               name="Email"
               label="Email"
               id="Email"
+              v-model="email"
             ></v-text-field>
         </v-flex>
       </v-layout>
+
       <v-layout row>
         <v-flex xs12 sm6 offset-sm3>
           <v-text-field
               name="Hasło"
               label="Hasło"
               id="Hasło"
+              type="password"
+              v-model="password"
             ></v-text-field>
         </v-flex>
       </v-layout>
+
+      <v-layout row>
+        <v-flex class="text-xs-center">
+          <v-btn type='submit' primary> Zaloguj się </v-btn>
+        </v-flex>
+      </v-layout>
+    </form>
+
       <v-layout row>
         <v-flex xs12 sm6 offset-sm3>
           <p class="text-xs-center">Nie masz konta ?</p>
@@ -51,7 +65,26 @@ export default {
   name: "signup",
   data () {
     return {
-
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    SignInUser() {
+      console.log(this.email, this.password);
+      this.$store.dispatch('SignInUser', {name:this.name, surname: this.surname, email: this.email, password:this.password})
+    }
+  },
+  computed: {
+    user(){
+      return this.$store.getters.user;
+    }
+  },
+  watch: {
+    user(value) {
+      if (value !== null && value !== undefined) {
+        this.$router.push('/homepage');
+      }
     }
   }
 }

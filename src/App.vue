@@ -49,14 +49,16 @@ export default {
       menuIsOpen: false,
       splashScreenOpen: true,
       tempBackground: "teal lighten-1",
-      showSpinner:true
+      showSpinner:true,
+
+
       // pageStack: [HomePage],
       // proba: ['abc']
     }
   },
   computed:{
     showBackBtn(){
-      return this.$store.state.backBtnVisible
+      return this.$store.state.backBtnVisible;
     }
   },
   methods: {
@@ -66,7 +68,7 @@ export default {
     hiiide() {
       console.log("zostałem wywołany");
       this.showSpinner = false;
-    }
+    },
   },
   mounted: function() {
     //do something after creating vue instance
