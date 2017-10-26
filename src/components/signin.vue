@@ -73,19 +73,23 @@ export default {
     SignInUser() {
       console.log(this.email, this.password);
       this.$store.dispatch('SignInUser', {name:this.name, surname: this.surname, email: this.email, password:this.password})
+      // FIXME: make it error-handling (now it always redirects to homepage)
+      this.$router.push('/homepage');
     }
   },
   computed: {
-    user(){
-      return this.$store.getters.user;
-    }
+    // IDEA: This was previous idea .. I dunno how is that any better approach but basically getter used via watch odwoluje sie do wartosci usera wzietego z getters and somehow uses it in watch ..
+    // user(){
+    //   return this.$getters.user;
+    // }
   },
   watch: {
-    user(value) {
-      if (value !== null && value !== undefined) {
-        this.$router.push('/homepage');
-      }
-    }
+    // IDEA: connected with one above
+    // user(value) {
+    //   if (value !== null && value !== undefined) {
+    //     this.$router.push('/homepage');
+    //   }
+    // }
   }
 }
 </script>

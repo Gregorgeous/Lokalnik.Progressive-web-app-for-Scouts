@@ -9,7 +9,7 @@
                   {{keyHolderName}} {{keyHolderSurname}}
                 </v-list-tile-title>
                 <v-list-tile-sub-title>
-                  Info np. "Mam klucze do godz 20"
+                  info np. {{keyHolderNote}}
                 </v-list-tile-sub-title>
               </v-list-tile-content>
             </v-list-tile>
@@ -31,7 +31,7 @@
 export default {
   name: "currentKeyHolders",
   template: '#keysFinder',
-  props: ['keyHolderName','keyHolderSurname'],
+  props: ['keyHolderName','keyHolderSurname', 'keyHolderNote'],
   data: () => ({
 
   })
