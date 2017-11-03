@@ -54,5 +54,5 @@ export default new Router({
       component: meetWithDCS
     }
   ],
-  mode: 'history'
+
 })

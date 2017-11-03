@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="signupComp">
     <v-container>
       <h4 class="text-sm-center">Zarejestruj się :)</h4>
 
@@ -51,7 +51,7 @@
         </v-layout>
 
         <v-layout row>
-          <v-flex xs4 offset-xs2 sm6 offset-sm3>
+          <v-flex class="text-xs-center">
             <v-btn type='submit'> Rejestruję się ! ^^ </v-btn>
           </v-flex>
         </v-layout>
@@ -60,17 +60,15 @@
 
     </v-container>
 
-    <v-alert info value="true" class="text-xs-center " style="font-style: italic; margin-bottom:0">
-      Jako gośc nie możesz umówic sie z komendantem, rezerwowac lokalu, dołączac do wydarzeń i oznaczac się że masz klucze
-    </v-alert>
-
-
+      <v-alert info value="true" class="text-xs-center" >
+        Jako gość nie możesz umówić się z komendantem, rezerwować lokalu, dołączać do wydarzeń i oznaczać się że masz klucze
+      </v-alert>
   </div>
 </template>
 
 <script>
 export default {
-  name: "signup",
+  name: "signupComp",
   data () {
     return {
       name: '',
@@ -103,5 +101,12 @@ export default {
 </script>
 
 <style scoped>
-
+  .alert{
+    border-radius: 5px;
+    font-style: italic;
+    margin-bottom: 0px;
+    padding-bottom: auto;
+    left: 0;
+    right: 0;
+  }
 </style>

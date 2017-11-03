@@ -1,20 +1,19 @@
-<template id="main">
+<template id="app">
   <v-app>
 
-    <div>
-      <v-toolbar class="home-toolbar">
-        <router-link to='/homepage' tag='span' class="ml-0" v-if="showBackBtn">
-          <v-toolbar-side-icon @click="hideBackBtn" >
-            <i class="fa fa-arrow-left fa-lg" aria-hidden="true" ></i>
-          </v-toolbar-side-icon>
-        </router-link>
-        <v-toolbar-title class="ml-2">{{ msg }}</v-toolbar-title>
-        <img class="ml-3 "style="max-height:80%" src="./assets/zoliborz_logo.png" alt="app-logo">
-      </v-toolbar>
-      <main>
+    <v-toolbar class="home-toolbar">
+      <router-link to='/homepage' tag='span' class="ml-0" v-if="showBackBtn">
+        <v-toolbar-side-icon @click="hideBackBtn" >
+          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" ></i>
+        </v-toolbar-side-icon>
+      </router-link>
+      <v-toolbar-title class="ml-2">Lokalnik</v-toolbar-title>
+      <img class="ml-3 "style="max-height:80%" src="./assets/zoliborz_logo.png" alt="app-logo">
+    </v-toolbar>
+
+    <main>
         <router-view ></router-view>
-      </main>
-    </div>
+    </main>
 
   </v-app>
 </template>
@@ -31,15 +30,6 @@ export default {
   },
   data () {
     return {
-      msg: 'Lokalnik',
-      menuIsOpen: false,
-      splashScreenOpen: true,
-      tempBackground: "teal lighten-1",
-      showSpinner:true,
-
-
-      // pageStack: [HomePage],
-      // proba: ['abc']
     }
   },
   computed:{
@@ -50,28 +40,11 @@ export default {
   methods: {
     hideBackBtn(){
       this.$store.state.backBtnVisible = false;
-    },
-    hiiide() {
-      console.log("zostałem wywołany");
-      this.showSpinner = false;
-    },
+    }
   }
 }
 </script>
 
 <style scoped>
-ons-splitter-side[side=left][animation=overlay] {
-  border-right: 1px solid #BBB;
-}
 
-ons-card {
-  text-align: center;
-}
-ons-list-item, ons-card {
-  cursor: pointer;
-}
-
-#MainTitle{
-  text-align: center;
-}
 </style>
