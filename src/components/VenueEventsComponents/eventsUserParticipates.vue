@@ -26,7 +26,7 @@
              <v-flex xs12 align-end flexbox>
              </v-flex>
              <h5>
-               Ten pokój jest pusty.. wiesz co jeszcze jest?
+               Ten pokój jest pusty.. a wiesz co jeszcze jest?
                <br>
                ..na pewno wiesz co z tym zrobić :>
              </h5>
