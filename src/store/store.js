@@ -22,7 +22,23 @@ export const store = new Vuex.Store({
     roversEventsDB: [],
     loadingState: false,
     backBtnVisible: false,
-    user: null,
+    user: {
+      email:"admin123@admin.pl",
+      eventsEditable: [
+        "-KxsV-YCZ5eHt4RzV4o1",
+        "-Kxz8USdjSLNlXRcCChm"
+      ],
+      eventsUserParticipates: [
+        "-KxsV-YCZ5eHt4RzV4o1",
+        "-Kxz8USdjSLNlXRcCChm"
+      ],
+      hasKeys:false,
+      id:"Tma5ke5qyQOKmnpiQt0jI5KBo1F2",
+      keyHoldersNote:"",
+      name:"admin123",
+      surname:"admin123",
+      usersDbKey:"-KxoxVYECEBpX6Ssen2c",
+    },
     isUserAGuest: false
   },
   mutations: {
@@ -132,6 +148,24 @@ export const store = new Vuex.Store({
           state.user = {
             ...state.user,
             eventsUserParticipates: [eventID]
+          }
+        }
+      },
+      addEventUserParticipatesLocally(state, theEvent){
+        if (!state.user.eventsUserParticipates) {
+            state.user['eventsUserParticipates'] = [];
+        }
+        state.user.eventsUserParticipates.push(theEvent.ID);
+      },
+      deleteEventUserParticipatesLocally(state, theEvent){
+        if (!state.user.eventsUserParticipates) {
+            return;
+        }
+        else{
+          for (var i = 0; i < state.user.eventsUserParticipates.length; i++) {
+           if (state.user.eventsUserParticipates[i] === theEvent.ID) {
+             state.user.eventsUserParticipates.splice(i,1);
+           }
           }
         }
       }
@@ -351,7 +385,44 @@ export const store = new Vuex.Store({
             commit('changeLoadingState', false);
           }
         })
-      }
+      },
+     fetchIndividualEvent (eventID){
+       // TODO: fetch the ind. event from FB if user lands on "eventDetails" page with an empty vuex store (basically, when user refreshed page)
+     },
+     deleteEventUserParticipates({commit,state}, theEvent){
+       commit('deleteEventUserParticipatesLocally', theEvent);
+       if (state.user.usersDbKey) {
+         firebase.database().ref(`/usersDB/${state.user.usersDbKey}/eventsUserParticipates`).once('value').then((snap) =>{
+           let allIDs = snap.val();
+           console.log("AllIDs", allIDs);
+           for (var i = 0; i < allIDs.length; i++) {
+             if (allIDs[i] == theEvent.ID) {
+               allIDs.splice(i,1);
+             }
+           }
+           firebase.database().ref(`/usersDB/${state.user.usersDbKey}/eventsUserParticipates`).set(allIDs);
+         })
+       }
+       else {
+         console.log("Something went wrong, try again");
+       }
+     },
+     addEventUserParticipates({commit,state}, theEvent){
+       commit('addEventUserParticipatesLocally', theEvent);
+       if (state.user.usersDbKey) {
+         firebase.database().ref(`/usersDB/${state.user.usersDbKey}/eventsUserParticipates`).once('value').then((snap) =>{
+           let allIDs = snap.val();
+           if (allIDs ===null) {
+             allIDs = [];
+           }
+           allIDs.push(theEvent.ID);
+           firebase.database().ref(`/usersDB/${state.user.usersDbKey}/eventsUserParticipates`).set(allIDs);
+         })
+       }
+       else {
+         console.log("Something went wrong, try again");
+       }
+     }
     },
     getters: {
       isUserLogged(state) {

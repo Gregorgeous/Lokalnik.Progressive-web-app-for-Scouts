@@ -33,10 +33,18 @@
             <v-card-actions class="justify-space-around text-xs-center">
               <v-layout row wrap >
                 <v-flex>
-                  <v-btn flat class="orange--text" >Szczegóły</v-btn>
+                  <v-btn flat class="orange--text"
+                  @click ='goToEventDetails(theEvent)' >Szczegóły</v-btn>
                 </v-flex>
                 <v-flex>
-                  <v-btn flat class="orange--text">Biorę udział!</v-btn>
+                  <v-btn flat
+                   v-if="checkParticipation(theEvent)"
+                   @click= 'stopParticipatingInEvent(theEvent)'
+                   class="red--text">Nie wezmę udziału!</v-btn>
+                   <v-btn flat
+                    v-else
+                    @click='startParticipatingInEvent(theEvent)'
+                    class="orange--text">Biorę udział!</v-btn>
                 </v-flex>
               </v-layout>
             </v-card-actions>
@@ -73,7 +81,36 @@ export default {
   },
   computed: {
     isLoading (){return this.$store.state.loadingState;},
-    isUserAGuest(){return this.$store.state.isUserAGuest;}
+    isUserAGuest(){return this.$store.state.isUserAGuest;},
+    user (){return this.$store.state.user;}
+  },
+  methods: {
+    checkParticipation (theEvent) {
+      let idMatch = false;
+      console.log("this is my event id ", theEvent.ID);
+      if (this.user.eventsUserParticipates) {
+        this.user.eventsUserParticipates.forEach((id) => {
+          console.log("this is id from userDB", id);
+          if (id === theEvent.ID) {
+            idMatch = true;
+          }
+        })
+      }
+      return idMatch;
+    },
+    goToEventDetails(theEvent) {
+      let eventId = theEvent.ID;
+      this.$router.push({
+        name: 'eventDetails',
+        params: {event_id: eventId}
+    });
+  },
+    stopParticipatingInEvent(theEvent){
+      this.$store.dispatch('deleteEventUserParticipates', theEvent);
+    },
+    startParticipatingInEvent(theEvent){
+      this.$store.dispatch('addEventUserParticipates', theEvent);
+    }
   }
 }
 </script>
