@@ -87,85 +87,92 @@ export const store = new Vuex.Store({
           }
         }
       },
-      createNewEventLocally(state, payload){
+    createNewEventLocally(state, payload){
         let ourDesiredSectionDB = state[payload.sectionDBName];
         ourDesiredSectionDB.push(payload.theEvent);
       },
-      fetchEventsLocally(state, payload){
-        function storeData (vuexState, object){
-          vuexState = null; // do I need it ?
-          console.log(object);
-          if (object.length == 0) {
-            return vuexState = null;
-          }
-          else {
-            return object;
-          }
+    updateEventLocally(state, payload){
+      let theSection = state[payload.sectionDBName];
+      theSection.forEach((object) => {
+        if (object.ID === payload.theEvent.ID){
+          object = payload.theEvent;
         }
-        switch (payload.index) {
-          case 0:
-          state.generalEventsDB =  payload.myObject;
-          // storeData (state.generalEventsDB, payload.myObject);
-          break;
-          case 1:
-          state.cubScoutsEventsDB =  payload.myObject;
-          // storeData (state.cubScoutsEventsDB, payload.myObject);
-          break;
-          case 2:
-          state.scoutsEventsDB =  payload.myObject;
-          // storeData (state.scoutsEventsDB, payload.myObject);
-          break;
-          case 3:
-          state.explorersEventsDB =  payload.myObject;
-          // storeData (state.explorersEventsDB, payload.myObject);
-          break;
-          case 4:
-          state.roversEventsDB =  payload.myObject;
-          // storeData (state.roversEventsDB, payload.myObject);
-          break;
-          default:
-          console.log("there was an error storing Event locally");
-        }
-      },
-      assignEventToUser(state, eventID) {
-        if (state.user.eventsEditable) {
-          state.user.eventsEditable.push(eventID);
+      })
+    },
+    fetchEventsLocally(state, payload){
+      function storeData (vuexState, object){
+        vuexState = null; // do I need it ?
+        console.log(object);
+        if (object.length == 0) {
+          return vuexState = null;
         }
         else {
-          state.user = {
-            ...state.user,
-            eventsEditable: [eventID]
-          }
+          return object;
         }
-        console.log("lets check if spread op. worked: ", state.user);
+      }
+      switch (payload.index) {
+        case 0:
+        state.generalEventsDB =  payload.myObject;
+        // storeData (state.generalEventsDB, payload.myObject);
+        break;
+        case 1:
+        state.cubScoutsEventsDB =  payload.myObject;
+        // storeData (state.cubScoutsEventsDB, payload.myObject);
+        break;
+        case 2:
+        state.scoutsEventsDB =  payload.myObject;
+        // storeData (state.scoutsEventsDB, payload.myObject);
+        break;
+        case 3:
+        state.explorersEventsDB =  payload.myObject;
+        // storeData (state.explorersEventsDB, payload.myObject);
+        break;
+        case 4:
+        state.roversEventsDB =  payload.myObject;
+        // storeData (state.roversEventsDB, payload.myObject);
+        break;
+        default:
+        console.log("there was an error storing Event locally");
+        }
       },
-
-      setUserAsAttendingTheEvent(state, eventID) {
-        if (state.user.eventsUserParticipates) {
-          state.user.eventsUserParticipates.push(eventID);
+    assignEventToUser(state, eventID) {
+      if (state.user.eventsEditable) {
+        state.user.eventsEditable.push(eventID);
+      }
+      else {
+        state.user = {
+          ...state.user,
+          eventsEditable: [eventID]
         }
-        else {
-          state.user = {
-            ...state.user,
-            eventsUserParticipates: [eventID]
-          }
+      }
+      console.log("lets check if spread op. worked: ", state.user);
+      },
+    setUserAsAttendingTheEvent(state, eventID) {
+      if (state.user.eventsUserParticipates) {
+        state.user.eventsUserParticipates.push(eventID);
+      }
+      else {
+        state.user = {
+          ...state.user,
+          eventsUserParticipates: [eventID]
         }
+      }
       },
       addEventUserParticipatesLocally(state, theEvent){
         if (!state.user.eventsUserParticipates) {
-            state.user['eventsUserParticipates'] = [];
+          state.user['eventsUserParticipates'] = [];
         }
         state.user.eventsUserParticipates.push(theEvent.ID);
       },
       deleteEventUserParticipatesLocally(state, theEvent){
         if (!state.user.eventsUserParticipates) {
-            return;
+          return;
         }
         else{
           for (var i = 0; i < state.user.eventsUserParticipates.length; i++) {
-           if (state.user.eventsUserParticipates[i] === theEvent.ID) {
-             state.user.eventsUserParticipates.splice(i,1);
-           }
+            if (state.user.eventsUserParticipates[i] === theEvent.ID) {
+              state.user.eventsUserParticipates.splice(i,1);
+            }
           }
         }
       }
@@ -241,34 +248,34 @@ export const store = new Vuex.Store({
         firebase.auth().onAuthStateChanged(function(activeUser) {
           if (activeUser) {
             // User is signed in.
-             getTheUser(activeUser.uid).then(
+            getTheUser(activeUser.uid).then(
               (theUser)=>{
                 commit('setUser', theUser);
               })
 
-            if (anotherAction === '' || anotherAction === null) {
-              commit('changeLoadingState', false);
-              return;
-            }
-            else if (anotherAction === "getCurrentKeyHolders") {
-              store.dispatch("getCurrentKeyHolders");
-            }
-            else if (anotherAction === "fetchCurrentEvents"){
-              for (var i = 0; i < 5; i++) {
-                store.dispatch('fetchCurrentEvents', i);
+              if (anotherAction === '' || anotherAction === null) {
+                commit('changeLoadingState', false);
+                return;
               }
+              else if (anotherAction === "getCurrentKeyHolders") {
+                store.dispatch("getCurrentKeyHolders");
+              }
+              else if (anotherAction === "fetchCurrentEvents"){
+                for (var i = 0; i < 5; i++) {
+                  store.dispatch('fetchCurrentEvents', i);
+                }
+              }
+              else {
+                store.dispatch(anotherAction);
+                commit('changeLoadingState', false);
+              }
+            } else {
+              // No user is signed in.
+              commit('setGuestUser');
+              return false;
             }
-            else {
-              store.dispatch(anotherAction);
-              commit('changeLoadingState', false);
-            }
-          } else {
-            // No user is signed in.
-            commit('setGuestUser');
-            return false;
-          }
-        });
-      },
+          });
+        },
       getCurrentKeyHolders({commit}) {
         firebase.database().ref('/usersDB').once('value')
         .then( usersSnapshot => {
@@ -314,6 +321,45 @@ export const store = new Vuex.Store({
         })
       },
       uploadNewEventToFB({commit,state}, theEvent){
+          var sectionDBName;
+          switch (theEvent.organizer) {
+            case "Wydarzenia ogólne":
+            sectionDBName = 'generalEventsDB'
+            break;
+            case "Nam. zuchowe":
+            sectionDBName = 'cubScoutsEventsDB'
+            break;
+            case "Nam. harcerskie":
+            sectionDBName = 'scoutsEventsDB'
+            break;
+            case "Nam. starszoharcerskie":
+            sectionDBName = 'explorersEventsDB'
+            break;
+            case "Nam. wędrownicze":
+            sectionDBName = 'roversEventsDB'
+            break;
+            default:
+            sectionDBName = 'generalEventsDB'
+          }
+          var newKey = firebase.database().ref(sectionDBName).push().key;
+          theEvent['ID'] = newKey;
+          theEvent['IDOfWhoCreatedEvent'] = state.user.id;
+          theEvent['nameOfWhoCreatedEvent'] = `${state.user.name}_${state.user.surname}`;
+
+          commit('createNewEventLocally', {theEvent, sectionDBName} );
+
+          // --------------------------------------
+          // SECTION WHERE we assign newly-created event to the user in db (make a quasi-relation)
+          commit('assignEventToUser', theEvent.ID);
+          // IDEA: THIS IS A NEW APPROACH: if we don't do the below, we can show separately the events user is an editor in the eventsUserParticipates.vue with less hassle.
+          // commit('setUserAsAttendingTheEvent', theEvent.ID);
+          // ---------------------------------------
+          var pushEvent = {};
+          pushEvent[`${sectionDBName}/${newKey}`] = theEvent;
+          pushEvent[`usersDB/${state.user.usersDbKey}`] = state.user;
+          firebase.database().ref().update(pushEvent);
+        },
+      updateEventOnFB({commit,state}, theEvent){
         var sectionDBName;
         switch (theEvent.organizer) {
           case "Wydarzenia ogólne":
@@ -334,24 +380,9 @@ export const store = new Vuex.Store({
           default:
           sectionDBName = 'generalEventsDB'
         }
-        var newKey = firebase.database().ref(sectionDBName).push().key;
-        theEvent['ID'] = newKey;
-        theEvent['IDOfWhoCreatedEvent'] = state.user.id;
-        theEvent['nameOfWhoCreatedEvent'] = `${state.user.name}_${state.user.surname}`;
-
-        commit('createNewEventLocally', {theEvent, sectionDBName} );
-
-        // --------------------------------------
-        // SECTION WHERE we assign newly-created event to the user in db (make a quasi-relation)
-        commit('assignEventToUser', theEvent.ID);
-        // IDEA: THIS IS A NEW APPROACH: if we don't do the below, we can show separately the events user is an editor in the eventsUserParticipates.vue with less hassle.
-        // commit('setUserAsAttendingTheEvent', theEvent.ID);
-        // ---------------------------------------
-        var pushEvent = {};
-        pushEvent[`${sectionDBName}/${newKey}`] = theEvent;
-        pushEvent[`usersDB/${state.user.usersDbKey}`] = state.user;
-        firebase.database().ref().update(pushEvent);
-      },
+        commit('updateEventLocally', {theEvent, sectionDBName});
+        firebase.database().ref(`${sectionDBName}/${theEvent.ID}`).set(theEvent);
+        },
       fetchCurrentEvents({commit}, index){
         var nodeName = null;
         switch (index) {
@@ -386,125 +417,125 @@ export const store = new Vuex.Store({
             commit('changeLoadingState', false);
           }
         })
-      },
+        },
       fetchIndividualEvent (eventID){
-       // TODO: fetch the ind. event from FB if user lands on "eventDetails" page with an empty vuex store (basically, when user refreshed page)
-     },
+        // TODO: fetch the ind. event from FB if user lands on "eventDetails" page with an empty vuex store (basically, when user refreshed page)
+      },
       deleteEventUserParticipates({commit,state}, theEvent){
-       commit('deleteEventUserParticipatesLocally', theEvent);
-       if (state.user.usersDbKey) {
-         firebase.database().ref(`/usersDB/${state.user.usersDbKey}/eventsUserParticipates`).once('value').then((snap) =>{
-           let allIDs = snap.val();
-           console.log("AllIDs", allIDs);
-           for (var i = 0; i < allIDs.length; i++) {
-             if (allIDs[i] == theEvent.ID) {
-               allIDs.splice(i,1);
-             }
-           }
-           firebase.database().ref(`/usersDB/${state.user.usersDbKey}/eventsUserParticipates`).set(allIDs);
-         })
-       }
-       else {
-         console.log("Something went wrong, try again");
-       }
-     },
-      addEventUserParticipates({commit,state}, theEvent){
-       commit('addEventUserParticipatesLocally', theEvent);
-       if (state.user.usersDbKey) {
-         firebase.database().ref(`/usersDB/${state.user.usersDbKey}/eventsUserParticipates`).once('value').then((snap) =>{
-           let allIDs = snap.val();
-           if (allIDs ===null) {
-             allIDs = [];
-           }
-           allIDs.push(theEvent.ID);
-           firebase.database().ref(`/usersDB/${state.user.usersDbKey}/eventsUserParticipates`).set(allIDs);
-         })
-       }
-       else {
-         console.log("Something went wrong, try again");
-       }
-     }
-    },
-    getters: {
-      isUserLogged(state) {
-        if (state.user === null) {
-          console.log("zwracam fałsz");
-          return false;
+        commit('deleteEventUserParticipatesLocally', theEvent);
+        if (state.user.usersDbKey) {
+          firebase.database().ref(`/usersDB/${state.user.usersDbKey}/eventsUserParticipates`).once('value').then((snap) =>{
+            let allIDs = snap.val();
+            console.log("AllIDs", allIDs);
+            for (var i = 0; i < allIDs.length; i++) {
+              if (allIDs[i] == theEvent.ID) {
+                allIDs.splice(i,1);
+              }
+            }
+            firebase.database().ref(`/usersDB/${state.user.usersDbKey}/eventsUserParticipates`).set(allIDs);
+          })
         }
         else {
-          console.log("zwracam prawdę");
-          return true;
+          console.log("Something went wrong, try again");
         }
       },
-      isHavingKeys(state){
-        if (state.user == null){
-          return false;
+      addEventUserParticipates({commit,state}, theEvent){
+        commit('addEventUserParticipatesLocally', theEvent);
+        if (state.user.usersDbKey) {
+          firebase.database().ref(`/usersDB/${state.user.usersDbKey}/eventsUserParticipates`).once('value').then((snap) =>{
+            let allIDs = snap.val();
+            if (allIDs ===null) {
+              allIDs = [];
+            }
+            allIDs.push(theEvent.ID);
+            firebase.database().ref(`/usersDB/${state.user.usersDbKey}/eventsUserParticipates`).set(allIDs);
+          })
         }
         else {
-          if (state.user.hasKeys === true) {
-            return true;
-          }
-          else {
+          console.log("Something went wrong, try again");
+        }
+      }
+      },
+      getters: {
+        isUserLogged(state) {
+          if (state.user === null) {
+            console.log("zwracam fałsz");
             return false;
           }
-        }
-        // TRY THIS AS WELL :)
-        // state.user.hasOwnProperty('')
-      },
-      filterEventsUserParticipates(state){
-        let filteredEvents  = [];
-        function filterEvents(sectionDB){
-          sectionDB.forEach((obj) => {
-            state.user.eventsUserParticipates.forEach((id) => {
-              if (obj.ID === id) {
-                filteredEvents.push(obj);
-              }
+          else {
+            console.log("zwracam prawdę");
+            return true;
+          }
+        },
+        isHavingKeys(state){
+          if (state.user == null){
+            return false;
+          }
+          else {
+            if (state.user.hasKeys === true) {
+              return true;
+            }
+            else {
+              return false;
+            }
+          }
+          // TRY THIS AS WELL :)
+          // state.user.hasOwnProperty('')
+        },
+        filterEventsUserParticipates(state){
+          let filteredEvents  = [];
+          function filterEvents(sectionDB){
+            sectionDB.forEach((obj) => {
+              state.user.eventsUserParticipates.forEach((id) => {
+                if (obj.ID === id) {
+                  filteredEvents.push(obj);
+                }
+              })
             })
-          })
-        }
-        if (state.user.eventsUserParticipates) {
-        filterEvents(state.generalEventsDB);
-        filterEvents(state.cubScoutsEventsDB);
-        filterEvents(state.scoutsEventsDB);
-        filterEvents(state.explorersEventsDB);
-        filterEvents(state.roversEventsDB);
-        }
-        console.log("these are all events user participates:",filteredEvents);
-        return filteredEvents;
-      },
-      filterEventsUserIsAnEditor(state){
-        var filteredEditableEvents  = [];
-        function filterEvents(sectionDB){
-          sectionDB.forEach((obj) => {
-            state.user.eventsEditable.forEach((id) => {
-              if (obj.ID === id) {
-                filteredEditableEvents.push(obj);
-              }
+          }
+          if (state.user.eventsUserParticipates) {
+            filterEvents(state.generalEventsDB);
+            filterEvents(state.cubScoutsEventsDB);
+            filterEvents(state.scoutsEventsDB);
+            filterEvents(state.explorersEventsDB);
+            filterEvents(state.roversEventsDB);
+          }
+          console.log("these are all events user participates:",filteredEvents);
+          return filteredEvents;
+        },
+        filterEventsUserIsAnEditor(state){
+          var filteredEditableEvents  = [];
+          function filterEvents(sectionDB){
+            sectionDB.forEach((obj) => {
+              state.user.eventsEditable.forEach((id) => {
+                if (obj.ID === id) {
+                  filteredEditableEvents.push(obj);
+                }
+              })
             })
-          })
-        }
-        if (state.user.eventsEditable) {
-        filterEvents(state.generalEventsDB);
-        filterEvents(state.cubScoutsEventsDB);
-        filterEvents(state.scoutsEventsDB);
-        filterEvents(state.explorersEventsDB);
-        filterEvents(state.roversEventsDB);
-        }
-        console.log("these are all editable events:", filteredEditableEvents);
-        return filteredEditableEvents;
-      }
-    }
-  })
-
-
-  function getTheUser (userID) {
-    return firebase.database().ref("usersDB").once('value')
-    .then( allUsSnapshot => {
-      let allUsers = allUsSnapshot.val();
-      for (var nodeKey in allUsers) {
-        if (allUsers[nodeKey].id === userID) {
-          return allUsers[nodeKey];
+          }
+          if (state.user.eventsEditable) {
+            filterEvents(state.generalEventsDB);
+            filterEvents(state.cubScoutsEventsDB);
+            filterEvents(state.scoutsEventsDB);
+            filterEvents(state.explorersEventsDB);
+            filterEvents(state.roversEventsDB);
+          }
+          console.log("these are all editable events:", filteredEditableEvents);
+          return filteredEditableEvents;
         }
       }
     })
-  }
+
+
+    function getTheUser (userID) {
+      return firebase.database().ref("usersDB").once('value')
+      .then( allUsSnapshot => {
+        let allUsers = allUsSnapshot.val();
+        for (var nodeKey in allUsers) {
+          if (allUsers[nodeKey].id === userID) {
+            return allUsers[nodeKey];
+          }
+        }
+      })
+    }

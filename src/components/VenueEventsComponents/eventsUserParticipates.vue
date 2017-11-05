@@ -23,11 +23,11 @@
             <h4 class="text-xs-center mb-1 blue--text">Twoje wydarzenia </h4>
           </v-flex>
         </v-layout>
-      <v-layout row wrap >
-        <v-flex class="mb-5" v-for="theEvent in allEditableEvents" :key="theEvent.key" xs12 sm6 md4 lg3>
-          <v-card>
-            <v-card-media
-            src="https://static.pexels.com/photos/7096/people-woman-coffee-meeting.jpg" height="100px">
+        <v-layout row wrap >
+          <v-flex class="mb-5" v-for="theEvent in allEditableEvents" :key="theEvent.key" xs12 sm6 md4 lg3>
+            <v-card>
+              <v-card-media
+              src="https://static.pexels.com/photos/7096/people-woman-coffee-meeting.jpg" height="100px">
             </v-card-media>
             <v-card-title primary-title>
               <div>
@@ -40,7 +40,9 @@
             <v-card-actions class="justify-space-around text-xs-center">
               <v-layout row wrap >
                 <v-flex>
-                  <v-btn flat class="blue--text"
+                  <v-btn flat
+                  @click='goToEditEvent(theEvent)'
+                  class="blue--text"
                   >Edytuj wydarzenie</v-btn>
                 </v-flex>
               </v-layout>
@@ -50,67 +52,67 @@
       </v-layout>
     </div>
     <v-divider></v-divider>
-      <!-- Events user only participates -->
-      <h4 class="text-xs-center mb-1">Wydarzenia w których bierzesz udział: </h4>
-      <v-layout row wrap v-if="sectionVuexState.length>0">
-        <v-flex class="mb-5"v-for="theEvent in sectionVuexState" :key="theEvent.key" xs12 sm6 md4 lg3>
-          <v-card>
-            <v-card-media
-            src="https://static.pexels.com/photos/7096/people-woman-coffee-meeting.jpg" height="100px">
-            </v-card-media>
-            <v-card-title primary-title>
-              <div>
-                <h3 class="headline text-xs-center">{{theEvent.title}}</h3>
-                <div class="text-xs-center">
-                  {{theEvent.description}}
-                </div>
-              </div>
-            </v-card-title>
-            <v-card-actions class="justify-space-around text-xs-center">
-              <v-layout row wrap >
-                <v-flex>
-                  <v-btn flat class="orange--text"
-                  @click ='goToEventDetails(theEvent)' >Szczegóły</v-btn>
-                </v-flex>
-                <v-flex>
-                  <v-btn flat
-                   v-if="checkParticipation(theEvent)"
-                   @click= 'stopParticipatingInEvent(theEvent)'
-                   class="red--text">Nie wezmę udziału!</v-btn>
-                   <v-btn flat
-                    v-else
-                    @click='startParticipatingInEvent(theEvent)'
-                    class="orange--text">Biorę udział!</v-btn>
-                </v-flex>
-              </v-layout>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
-      </v-layout>
-      <!-- IF NO EVENTS FOUND  -->
-      <v-layout v-else>
-        <v-flex class="mb-5">
-          <v-card color="cyan darken-2" class="white--text " style="border-radius: 45px;">
-            <v-card-media
-            src="http://www.jcwallsandceilings.com.au/wp-content/uploads/2015/08/iStock_000057942062_Large.jpg"
-            height="205px"
-            ></v-card-media>
-          </v-card>
-          <v-card style="border-radius:40px; ">
-            <v-card-title class="pa-0 text-xs-center">
-              <v-flex>
-                <h5 class="ma-0">Ten pokój jest pusty..</h5>
-                <h5 class="ma-0">Wiesz co jeszcze jest puste? :></h5>
-                <h5 class="ma-0">To na pewno wiesz też co robić ;) </h5>
-              </v-flex>
-            </v-card-title>
-          </v-card>
-          <v-divider></v-divider>
-        </v-flex>
-      </v-layout>
-    </div>
+    <!-- Events user only participates -->
+    <h4 class="text-xs-center mb-1">Wydarzenia w których bierzesz udział: </h4>
+    <v-layout row wrap v-if="sectionVuexState.length>0">
+      <v-flex class="mb-5"v-for="theEvent in sectionVuexState" :key="theEvent.key" xs12 sm6 md4 lg3>
+        <v-card>
+          <v-card-media
+          src="https://static.pexels.com/photos/7096/people-woman-coffee-meeting.jpg" height="100px">
+        </v-card-media>
+        <v-card-title primary-title>
+          <div>
+            <h3 class="headline text-xs-center">{{theEvent.title}}</h3>
+            <div class="text-xs-center">
+              {{theEvent.description}}
+            </div>
+          </div>
+        </v-card-title>
+        <v-card-actions class="justify-space-around text-xs-center">
+          <v-layout row wrap >
+            <v-flex>
+              <v-btn flat class="orange--text"
+              @click ='goToEventDetails(theEvent)' >Szczegóły</v-btn>
+            </v-flex>
+            <v-flex>
+              <v-btn flat
+              v-if="checkParticipation(theEvent)"
+              @click= 'stopParticipatingInEvent(theEvent)'
+              class="red--text">Nie wezmę udziału!</v-btn>
+              <v-btn flat
+              v-else
+              @click='startParticipatingInEvent(theEvent)'
+              class="orange--text">Biorę udział!</v-btn>
+            </v-flex>
+          </v-layout>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
+  </v-layout>
+  <!-- IF NO EVENTS FOUND  -->
+  <v-layout v-else>
+    <v-flex class="mb-5">
+      <v-card color="cyan darken-2" class="white--text " style="border-radius: 45px;">
+        <v-card-media
+        src="http://www.jcwallsandceilings.com.au/wp-content/uploads/2015/08/iStock_000057942062_Large.jpg"
+        height="205px"
+        ></v-card-media>
+      </v-card>
+      <v-card style="border-radius:40px; ">
+        <v-card-title class="pa-0 text-xs-center">
+          <v-flex>
+            <h5 class="ma-0">Ten pokój jest pusty..</h5>
+            <h5 class="ma-0">Wiesz co jeszcze jest puste? :></h5>
+            <h5 class="ma-0">To na pewno wiesz też co robić ;) </h5>
+          </v-flex>
+        </v-card-title>
+      </v-card>
+      <v-divider></v-divider>
+    </v-flex>
+  </v-layout>
+</div>
 
-  </div>
+</div>
 </template>
 
 <script>
@@ -162,8 +164,15 @@ export default {
       this.$router.push({
         name: 'eventDetails',
         params: {event_id: eventId}
-    });
-  },
+      });
+    },
+    goToEditEvent(theEvent) {
+      let editedEventId = theEvent.ID;
+      this.$router.push({
+        name: 'editEvent',
+        params: {editedEvent_id: editedEventId}
+      });
+    },
     stopParticipatingInEvent(theEvent){
       this.$store.dispatch('deleteEventUserParticipates', theEvent);
     },

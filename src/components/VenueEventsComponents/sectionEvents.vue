@@ -35,6 +35,7 @@
               v-if="checkEditability(theEvent)">
               <v-flex>
                 <v-btn flat class="blue--text"
+                @click='goToEditEvent(theEvent)'
                 >Edytuj wydarzenie</v-btn>
               </v-flex>
               </v-layout>
@@ -120,7 +121,14 @@ export default {
         name: 'eventDetails',
         params: {event_id: eventId}
     });
-  },
+    },
+    goToEditEvent(theEvent) {
+      let editedEventId = theEvent.ID;
+      this.$router.push({
+        name: 'editEvent',
+        params: {editedEvent_id: editedEventId}
+    });
+    },
     stopParticipatingInEvent(theEvent){
       this.$store.dispatch('deleteEventUserParticipates', theEvent);
     },

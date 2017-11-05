@@ -97,8 +97,8 @@
       <v-time-picker v-model="formData.time" actions format="24hr">
         <template scope="{ save, cancel }">
           <v-card-actions>
-            <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
-            <v-btn flat color="primary" @click="save">Save</v-btn>
+            <v-btn flat color="primary" @click="cancel">anuluj</v-btn>
+            <v-btn flat color="primary" @click="save">zapisz</v-btn>
           </v-card-actions>
         </template>
       </v-time-picker>

@@ -6,6 +6,7 @@ import HomePage from '@/components/HomePage'
 import keysFinder from '@/components/keysFinder'
 import venueEvents from '@/components/venueEvents'
 import eventDetails from '@/components/VenueEventsComponents/eventDetails'
+import editEvent from '@/components/VenueEventsComponents/editEvent'
 import bookVenue from '@/components/bookVenue'
 import venueCalendar from '@/components/venueCalendar'
 import meetWithDCS from '@/components/meetWithDCS'
@@ -16,13 +17,17 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'signin',
-      component:signin
+      redirect: '/homepage'
     },
     {
       path: '/homepage',
       name: 'HomePage',
       component: HomePage
+    },
+    {
+      path: '/signin',
+      name: 'signin',
+      component:signin
     },
     {
       path: '/signup',
@@ -44,6 +49,11 @@ export default new Router({
       name: 'eventDetails',
       component: eventDetails,
       props: true
+    },
+    {
+      path: '/venueevents/:editedEvent_id',
+      name: 'editEvent',
+      component: editEvent
     },
     {
       path: '/bookvenue',
