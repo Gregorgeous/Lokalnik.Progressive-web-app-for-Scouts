@@ -462,8 +462,6 @@ export const store = new Vuex.Store({
           })
         }
         if (state.user.eventsUserParticipates) {
-
-
         filterEvents(state.generalEventsDB);
         filterEvents(state.cubScoutsEventsDB);
         filterEvents(state.scoutsEventsDB);

@@ -16,6 +16,44 @@
     </div>
 
     <div v-else>
+      <!-- TODO: implement this -->
+      <!--Events user is an editor -->
+      <!-- <v-layout row wrap v-if="sectionVuexState.length > 0">
+        <v-flex class="mb-5"v-for="theEvent in sectionVuexState" :key="theEvent.key" xs12 sm6 md4 lg3>
+          <v-card>
+            <v-card-media
+            src="https://static.pexels.com/photos/7096/people-woman-coffee-meeting.jpg" height="100px">
+            </v-card-media>
+            <v-card-title primary-title>
+              <div>
+                <h3 class="headline text-xs-center">{{theEvent.title}}</h3>
+                <div class="text-xs-center">
+                  {{theEvent.description}}
+                </div>
+              </div>
+            </v-card-title>
+            <v-card-actions class="justify-space-around text-xs-center">
+              <v-layout row wrap >
+                <v-flex>
+                  <v-btn flat class="orange--text"
+                  @click ='goToEventDetails(theEvent)' >Szczegóły</v-btn>
+                </v-flex>
+                <v-flex>
+                  <v-btn flat
+                   v-if="checkParticipation(theEvent)"
+                   @click= 'stopParticipatingInEvent(theEvent)'
+                   class="red--text">Nie wezmę udziału!</v-btn>
+                   <v-btn flat
+                    v-else
+                    @click='startParticipatingInEvent(theEvent)'
+                    class="orange--text">Biorę udział!</v-btn>
+                </v-flex>
+              </v-layout>
+            </v-card-actions>
+          </v-card>
+        </v-flex>
+      </v-layout> -->
+      <!-- Events user only participates -->
       <v-layout row wrap v-if="sectionVuexState.length > 0">
         <v-flex class="mb-5"v-for="theEvent in sectionVuexState" :key="theEvent.key" xs12 sm6 md4 lg3>
           <v-card>
@@ -51,6 +89,7 @@
           </v-card>
         </v-flex>
       </v-layout>
+
       <v-layout v-else>
         <v-flex class="mb-5">
           <v-card color="cyan darken-2" class="white--text " style="border-radius: 45px;">
@@ -97,6 +136,17 @@ export default {
       if (this.user.eventsUserParticipates) {
         this.user.eventsUserParticipates.forEach((id) => {
           console.log("this is id from userDB", id);
+          if (id === theEvent.ID) {
+            idMatch = true;
+          }
+        })
+      }
+      return idMatch;
+    },
+    checkEditability (theEvent){
+      let idMatch = false;
+      if (this.user.eventsEditable) {
+        this.user.eventsEditable.forEach((id) => {
           if (id === theEvent.ID) {
             idMatch = true;
           }

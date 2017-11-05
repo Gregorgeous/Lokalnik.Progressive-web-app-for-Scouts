@@ -31,7 +31,14 @@
               </div>
             </v-card-title>
             <v-card-actions class="justify-space-around text-xs-center">
-              <v-layout row wrap >
+              <v-layout
+              v-if="checkEditability(theEvent)">
+              <v-flex>
+                <v-btn flat class="blue--text"
+                >Edytuj wydarzenie</v-btn>
+              </v-flex>
+              </v-layout>
+              <v-layout v-else row wrap >
                 <v-flex>
                   <v-btn flat class="orange--text"
                   @click ='goToEventDetails(theEvent)' >Szczegóły</v-btn>
@@ -87,10 +94,19 @@ export default {
   methods: {
     checkParticipation (theEvent) {
       let idMatch = false;
-      console.log("this is my event id ", theEvent.ID);
       if (this.user.eventsUserParticipates) {
         this.user.eventsUserParticipates.forEach((id) => {
-          console.log("this is id from userDB", id);
+          if (id === theEvent.ID) {
+            idMatch = true;
+          }
+        })
+      }
+      return idMatch;
+    },
+    checkEditability (theEvent){
+      let idMatch = false;
+      if (this.user.eventsEditable) {
+        this.user.eventsEditable.forEach((id) => {
           if (id === theEvent.ID) {
             idMatch = true;
           }
