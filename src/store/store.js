@@ -344,7 +344,8 @@ export const store = new Vuex.Store({
         // --------------------------------------
         // SECTION WHERE we assign newly-created event to the user in db (make a quasi-relation)
         commit('assignEventToUser', theEvent.ID);
-        commit('setUserAsAttendingTheEvent', theEvent.ID);
+        // IDEA: THIS IS A NEW APPROACH: if we don't do the below, we can show separately the events user is an editor in the eventsUserParticipates.vue with less hassle.
+        // commit('setUserAsAttendingTheEvent', theEvent.ID);
         // ---------------------------------------
         var pushEvent = {};
         pushEvent[`${sectionDBName}/${newKey}`] = theEvent;
@@ -386,10 +387,10 @@ export const store = new Vuex.Store({
           }
         })
       },
-     fetchIndividualEvent (eventID){
+      fetchIndividualEvent (eventID){
        // TODO: fetch the ind. event from FB if user lands on "eventDetails" page with an empty vuex store (basically, when user refreshed page)
      },
-     deleteEventUserParticipates({commit,state}, theEvent){
+      deleteEventUserParticipates({commit,state}, theEvent){
        commit('deleteEventUserParticipatesLocally', theEvent);
        if (state.user.usersDbKey) {
          firebase.database().ref(`/usersDB/${state.user.usersDbKey}/eventsUserParticipates`).once('value').then((snap) =>{
@@ -407,7 +408,7 @@ export const store = new Vuex.Store({
          console.log("Something went wrong, try again");
        }
      },
-     addEventUserParticipates({commit,state}, theEvent){
+      addEventUserParticipates({commit,state}, theEvent){
        commit('addEventUserParticipatesLocally', theEvent);
        if (state.user.usersDbKey) {
          firebase.database().ref(`/usersDB/${state.user.usersDbKey}/eventsUserParticipates`).once('value').then((snap) =>{
@@ -451,12 +452,12 @@ export const store = new Vuex.Store({
         // state.user.hasOwnProperty('')
       },
       filterEventsUserParticipates(state){
-        let filteredEvent  = [];
+        let filteredEvents  = [];
         function filterEvents(sectionDB){
           sectionDB.forEach((obj) => {
             state.user.eventsUserParticipates.forEach((id) => {
               if (obj.ID === id) {
-                filteredEvent.push(obj);
+                filteredEvents.push(obj);
               }
             })
           })
@@ -468,9 +469,29 @@ export const store = new Vuex.Store({
         filterEvents(state.explorersEventsDB);
         filterEvents(state.roversEventsDB);
         }
-        console.log("these are all events ");
-        console.log(filteredEvent);
-        return filteredEvent;
+        console.log("these are all events user participates:",filteredEvents);
+        return filteredEvents;
+      },
+      filterEventsUserIsAnEditor(state){
+        var filteredEditableEvents  = [];
+        function filterEvents(sectionDB){
+          sectionDB.forEach((obj) => {
+            state.user.eventsEditable.forEach((id) => {
+              if (obj.ID === id) {
+                filteredEditableEvents.push(obj);
+              }
+            })
+          })
+        }
+        if (state.user.eventsEditable) {
+        filterEvents(state.generalEventsDB);
+        filterEvents(state.cubScoutsEventsDB);
+        filterEvents(state.scoutsEventsDB);
+        filterEvents(state.explorersEventsDB);
+        filterEvents(state.roversEventsDB);
+        }
+        console.log("these are all editable events:", filteredEditableEvents);
+        return filteredEditableEvents;
       }
     }
   })

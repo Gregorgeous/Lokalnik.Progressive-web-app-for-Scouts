@@ -183,15 +183,13 @@ export default {
     },
     filteredEventsUserParticipates(){
       return this.$store.getters.filterEventsUserParticipates;
+    },
+    filteredEventsUserIsAnEditor(){
+      return this.$store.getters.filterEventsUserIsAnEditor;
     }
-
   },
   created() {
-    //do something a  fter creating vue instance
-
     this.$store.dispatch('checkIfLoggedUser', 'fetchCurrentEvents');
-
-
   }
 }
 </script>
