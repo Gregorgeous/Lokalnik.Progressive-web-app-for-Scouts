@@ -40,7 +40,7 @@
           readonly
         ></v-text-field>
         <v-time-picker v-model="e6" actions format="24hr">
-          <template scope="{ save, cancel }">
+          <template slot-scope="{ save, cancel }">
             <v-card-actions>
               <v-btn flat primary @click="cancel()">anuluj</v-btn>
               <v-btn flat primary @click="save()">klik!</v-btn>
@@ -101,6 +101,16 @@
       <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
     </v-snackbar>
 
+    <v-snackbar
+      top
+      right
+      vertical
+      v-model='information'
+    >
+      Ta sekcja na razie nie działa ale możesz wypróbować jak będzie funkcjonować :)
+      <v-btn flat  class='amber--text' @click="information = false">Zamknij wiadomość</v-btn>
+    </v-snackbar>
+
 
 </v-container>
 </template>
@@ -111,6 +121,7 @@ export default {
   template: '#meetWithDCS',
   data () {
     return {
+      information: false,
       msg: 'Lokalnik',
       e1: null,
       items: [
@@ -135,6 +146,10 @@ export default {
       timeout: 2000,
       text: 'Dałeś znać Pawłowi - w razie co, skontakuje się z Tobą :) '
     }
+  },
+  mounted() {
+    //do something after mounting vue instance
+    this.information = true;
   }
 }
 </script>

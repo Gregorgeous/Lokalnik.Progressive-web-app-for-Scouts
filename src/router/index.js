@@ -14,10 +14,11 @@ import meetWithDCS from '@/components/meetWithDCS'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
-      redirect: '/homepage'
+      redirect: '/signin',
     },
     {
       path: '/homepage',
@@ -48,7 +49,6 @@ export default new Router({
       path: '/venueevents/:event_id',
       name: 'eventDetails',
       component: eventDetails,
-      props: true
     },
     {
       path: '/venueevents/:editedEvent_id',

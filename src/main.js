@@ -5,7 +5,6 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
-import VueRouter from 'vue-router'
 import App from './App'
 import * as firebase from 'firebase'
 import {store} from './store/store'
@@ -15,35 +14,26 @@ Vue.config.productionTip = false
 
 
 Vue.use(Vuetify)
-Vue.use(VueRouter)
 
 /* eslint-disable no-new */
-new Vue({
-  store: store,
-  router,
-  el: '#app',
-  render:h => h(App),
-  created() {
-    //do something after creating vue instance
-    firebase.initializeApp({
-    apiKey: "AIzaSyALvp9YWh-VIIWlxB2w37QYtsl4vfoKlnk",
-    authDomain: "lokalnik-app.firebaseapp.com",
-    databaseURL: "https://lokalnik-app.firebaseio.com",
-    projectId: "lokalnik-app",
-    storageBucket: "lokalnik-app.appspot.com"
-    })
-  }
-  // template: '<App/>',
-  // components: { App }
+let app;
+
+firebase.initializeApp({
+apiKey: "AIzaSyALvp9YWh-VIIWlxB2w37QYtsl4vfoKlnk",
+authDomain: "lokalnik-app.firebaseapp.com",
+databaseURL: "https://lokalnik-app.firebaseio.com",
+projectId: "lokalnik-app",
+storageBucket: "lokalnik-app.appspot.com"
 })
 
-router.beforeEach((to, from, next) => {
-  firebase.auth()
-  .onAuthStateChanged(function(activeUser) {
-    if (activeUser) {
-      next();
-    }else {
-      next('/signin');
-    }
-  });
+firebase.auth().onAuthStateChanged(function(user){
+  if (!app) {
+    app = new Vue({
+      el: '#app',
+      router,
+      store,
+      template: '<App/>',
+      components: { App },
+    })
+  }
 })

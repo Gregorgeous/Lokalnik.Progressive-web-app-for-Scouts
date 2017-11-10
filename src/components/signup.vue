@@ -60,8 +60,8 @@
 
     </v-container>
 
-      <v-alert info value="true" class="text-xs-center" >
-        Jako gość nie możesz umówić się z komendantem, rezerwować lokalu, dołączać do wydarzeń i oznaczać się że masz klucze
+      <v-alert warning transition="scale-transition" :value="errorInForm" class="text-xs-center" >
+        {{errorMessage}}
       </v-alert>
   </div>
 </template>
@@ -74,7 +74,9 @@ export default {
       name: '',
       surname: '',
       email: '',
-      password: ''
+      password: '',
+      errorInForm: false,
+      errorMessage: ''
     }
   },
   methods: {
@@ -82,7 +84,18 @@ export default {
       console.log(
         this.name, this.surname, this.email, this.password
       );
-      this.$store.dispatch('SignUpUser', {name:this.name, surname: this.surname, email: this.email, password:this.password})
+      if (this.name == '' || this.surname == '' || this.email == '' || this.password == '') {
+        this.errorInForm = true;
+        this.errorMessage = 'Jedno lub więcej pól nie zostało wypełnionych!';
+      } else if (this.password.length < 6) {
+        this.errorInForm = true;
+        this.errorMessage = 'Hasło musi mieć przynajmniej 6 znaków';
+      } else {
+        this.errorInForm = false;
+        this.errorMessage = '';
+        this.$store.dispatch('SignUpUser', {name:this.name, surname: this.surname, email: this.email, password:this.password})
+        this.$router.push('/homepage');
+      }
     }
   },
   computed: {

@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import homePage from './../components/HomePage.vue'
-import * as firebase from 'firebase'
+import * as firebase from 'firebase';
 
 Vue.use(Vuex);
 
@@ -39,7 +38,8 @@ export const store = new Vuex.Store({
       surname:"admin123",
       usersDbKey:"-KxoxVYECEBpX6Ssen2c",
     },
-    isUserAGuest: false
+    isUserAGuest: false,
+    explicitLoginState: false
   },
   mutations: {
     setUser (state, payload) {
@@ -158,13 +158,13 @@ export const store = new Vuex.Store({
         }
       }
       },
-      addEventUserParticipatesLocally(state, theEvent){
+    addEventUserParticipatesLocally(state, theEvent){
         if (!state.user.eventsUserParticipates) {
           state.user['eventsUserParticipates'] = [];
         }
         state.user.eventsUserParticipates.push(theEvent.ID);
       },
-      deleteEventUserParticipatesLocally(state, theEvent){
+    deleteEventUserParticipatesLocally(state, theEvent){
         if (!state.user.eventsUserParticipates) {
           return;
         }
@@ -175,7 +175,15 @@ export const store = new Vuex.Store({
             }
           }
         }
-      }
+      },
+    signOutUserLocally(state){
+      state.user = null;
+    },
+    booleanLoginState(state, payload){
+      console.log("my payload", payload);
+      state.explicitLoginState = payload;
+      console.log("state ", state.explicitLoginState);
+    }
     },
     actions: {
       SignUpUser ({commit}, payload) {
@@ -226,20 +234,25 @@ export const store = new Vuex.Store({
           }
         )
       },
-      SignInUser ({commit}, payload) {
-        firebase.auth()
+      SignInUser ({commit, state}, payload) {
+        commit('changeLoadingState', true);
+        return firebase.auth()
         .signInWithEmailAndPassword(payload.email, payload.password)
         .then(
           user => {
             const newUser = {
               id: user.uid,
             }
-            commit('setUser', newUser)
+            commit('setUser', newUser);
+            commit('changeLoadingState', false);
+            return true;
           }
         )
         .catch(
           error => {
             console.log(error);
+            commit('changeLoadingState', false);
+            return false;
           }
         )
       },
@@ -454,6 +467,25 @@ export const store = new Vuex.Store({
         else {
           console.log("Something went wrong, try again");
         }
+      },
+      signOutUser({commit}){
+        commit('signOutUserLocally');
+        firebase.auth().signOut().then(function() {
+            // Sign-out successful.
+          }).catch(function(error) {
+            // An error happened.
+          });
+      },
+      booleanLoginState({commit}){
+        // let user = firebase.auth().currentUser;
+        firebase.auth().onAuthStateChanged(
+          function (user) {
+        if (user) {
+          commit('booleanLoginState', true);
+        }else {
+          commit('booleanLoginState', false);
+        }
+      })
       }
       },
       getters: {
@@ -523,11 +555,22 @@ export const store = new Vuex.Store({
           }
           console.log("these are all editable events:", filteredEditableEvents);
           return filteredEditableEvents;
+        },
+        decideWhetherToPromptForLoginFAB(state){
+          // var user = firebase.auth().currentUser;
+          // console.log("moj user:", user);
+          // if (user) {
+          //   return true;
+          // }
+          // else {
+          //   console.log("fałsz!");
+          //   return false;
+          // }
         }
       }
     })
 
-
+    // HELPER FUNCTION
     function getTheUser (userID) {
       return firebase.database().ref("usersDB").once('value')
       .then( allUsSnapshot => {

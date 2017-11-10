@@ -34,6 +34,12 @@
         </v-layout>
       </form>
 
+      <v-layout v-if="isLoading" transition="scale-transition" row>
+        <v-flex class="text-xs-center">
+          <v-progress-circular class="amber--text" indeterminate size="40"
+          ></v-progress-circular>
+        </v-flex>
+      </v-layout>
       <v-layout row>
         <v-flex>
           <p class="text-xs-center">Nie masz konta ?</p>
@@ -52,7 +58,10 @@
       </v-layout>
     </v-container>
 
-    <v-alert info value="true" class="text-xs-center ">
+    <v-alert warning transition="scale-transition" :value="errorInForm" class="text-xs-center" >
+      {{errorMessage}}
+    </v-alert>
+    <v-alert info value="true" v-if="!errorInForm" transition="scale-transition" class="text-xs-center ">
       Jako gość nie możesz umówić sie z komendantem, rezerwować lokalu, dołączać do wydarzeń i oznaczać się że masz klucze
     </v-alert>
 
@@ -66,18 +75,41 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      errorInForm: false,
+      errorMessage: ''
     }
   },
   methods: {
     SignInUser() {
       // console.log(this.email, this.password);
-      this.$store.dispatch('SignInUser', {name:this.name, surname: this.surname, email: this.email, password:this.password})
-      // FIXME: make it error-handling (now it always redirects to homepage)
-      this.$router.push('/homepage');
+      if (this.email == '' || this.password == '') {
+        this.errorInForm = true;
+        this.errorMessage = 'Jedno lub więcej pól nie zostało wypełnionych!';
+      } else if (this.password.length < 6) {
+        this.errorInForm = true;
+        this.errorMessage = 'Twoje hasło ma przynajmniej 6 znaków..';
+      } else {
+        this.$store.dispatch('SignInUser', {email: this.email, password:this.password})
+        .then((result) => {
+          console.log("result of promise", result);
+          if (result === false) {
+            this.errorInForm = true;
+            this.errorMessage = 'Hasło lub email się nie zgadzają';
+          }
+          else {
+            this.errorInForm = false;
+            this.errorMessage = '';
+            this.$router.push('/homepage');
+          }
+        })
+      }
     }
   },
   computed: {
+    isLoading(){
+      return this.$store.state.loadingState;
+    }
     // IDEA: This was previous idea .. I dunno how is that any better approach but basically getter used via watch odwoluje sie do wartosci usera wzietego z getters and somehow uses it in watch ..
     // user(){
     //   return this.$getters.user;
