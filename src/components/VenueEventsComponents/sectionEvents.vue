@@ -18,7 +18,7 @@
 
     <div v-else>
       <v-layout row wrap v-if="sectionVuexState.length > 0">
-        <v-flex class="mb-5"v-for="theEvent in sectionVuexState" :key="theEvent.key" xs12 sm6 md4 lg3>
+        <v-flex class="mb-5" v-for="theEvent in sectionVuexState" :key="theEvent.key" xs12 sm6 md4 lg3>
           <v-card>
             <v-card-media src="https://static.pexels.com/photos/7096/people-woman-coffee-meeting.jpg" height="100px">
             </v-card-media>

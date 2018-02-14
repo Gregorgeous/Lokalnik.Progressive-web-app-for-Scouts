@@ -7,9 +7,9 @@
         <i class="fa fa-arrow-left fa-lg" aria-hidden="true" ></i>
       </v-toolbar-side-icon>
       <v-toolbar-title class="ml-2">Lokalnik</v-toolbar-title>
-      <img class="ml-3 hidden-sm-and-up " v-if="!showBackBtn "style="max-height:80%" src="./assets/zoliborz_logo.png" alt="app-logo">
+      <img class="ml-3 hidden-sm-and-up " v-if="!showBackBtn " style="max-height:80%" src="./assets/zoliborz_logo.png" alt="app-logo">
       <!--IDEA:cheap work-around to show the logo when the way I want it -->
-      <img class="ml-3 hidden-xs-only "style="max-height:80%" src="./assets/zoliborz_logo.png" alt="app-logo">
+      <img class="ml-3 hidden-xs-only " style="max-height:80%" src="./assets/zoliborz_logo.png" alt="app-logo">
       <v-spacer></v-spacer>
       <v-toolbar-side-icon v-if="logoutButton" @click="signOut">
           <i class="fa fa-sign-out fa-2x" id="logoutIcon" aria-hidden="true" ></i>
