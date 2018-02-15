@@ -28,8 +28,8 @@
               <!-- FIXME: find out why it's not currently showing (the production version does) -->
               <v-card>
                 <v-card-actions>
-                  <v-btn flat  @click="cancel()">anuluj</v-btn>
-                  <v-btn flat  @click="save()">klik!</v-btn>
+                  <v-btn flat @click="cancel()">anuluj</v-btn>
+                  <v-btn flat @click="save()">klik!</v-btn>
                 </v-card-actions>
               </v-card>
             </template>
@@ -57,7 +57,9 @@
 
     <v-layout row>
       <v-flex xs-6 offset-xs4>
-        <v-btn round primary dark @click="snackbar = true">Daj znać!</v-btn>
+        <v-btn round primary dark @click="emailDCS">
+          Daj znać!
+        </v-btn>
       </v-flex>
     </v-layout>
 
@@ -111,12 +113,38 @@
     },
     methods: {
       emailDCS() {
+        this.snackbar = true;
+        let appointmentImportancy = 
+        this.appointmentImportancy? this.appointmentImportancy : "Nie sprecyzowano ważności spotkania" ;
+
+        let appointmentTime = 
+        this.appointmentTime? this.appointmentTime : "Nie podano kiedy";
         
+        let appointmentDuration =
+         this.appointmentDuration? this.appointmentDuration: "Nie podano na jak długo";
+        let appointmentMessage = 
+        this.appointmentMessage? this.appointmentMessage : "";
+        this.$store.dispatch('emailDCS', 
+        {appointmentImportancy,
+        appointmentTime, 
+        appointmentDuration, 
+        appointmentMessage})
+          .then((result) => {
+            console.log(result);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
       }
     },
     mounted() {
       //do something after mounting vue instance
       this.information = true;
+    },
+    created(){
+      if(!this.$store.state.user.email){
+        this.$store.dispatch('checkIfLoggedUser', null);
+      }
     }
   }
 
