@@ -541,7 +541,7 @@ export const store = new Vuex.Store({
       }
 
       function sendEmail(){
-        return axios.post('http://localhost:5000/lokalnik-app/us-central1/sendMailToDCS', {
+        return axios.post('https://us-central1-lokalnik-app.cloudfunctions.net/sendMailToDCS', {
           sendersName: state.user.name,
           sendersSurname: state.user.surname,
           sendersEmail: state.user.email,
@@ -549,6 +549,21 @@ export const store = new Vuex.Store({
           appointTime: email.appointmentTime,
           appointDuration: email.appointmentDuration,
           appointMessage: email.appointmentMessage
+        }).then((execStatus)=>{
+          console.log("the exec status:");
+          console.log(execStatus);
+          if (execStatus.status == 200 && execStatus.data.didItWork) {
+            axios.post('https://us-central1-lokalnik-app.cloudfunctions.net/sendConfirmationMail', {
+            sendersName: state.user.name,
+            sendersEmail: state.user.email,
+            message: execStatus.data.message
+            })
+          }
+          return execStatus.data.didItWork;           
+        }).catch((err)=> {
+          console.log("there was an error");
+          console.log(err);
+          return false;
         })
       }
     }

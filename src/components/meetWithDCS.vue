@@ -108,41 +108,45 @@
         context: 'success',
         mode: '',
         timeout: 2000,
-        text: 'Dałeś znać Pawłowi - w razie co, skontakuje się z Tobą :) '
+        text: 'Dałeś znać Pawłowi - w razie co, skontakuje się z Tobą :) ',
+        // Those 2 below will indicate whether both email to DCS and a callback email have been sent
+        email1Sent: true,
+        email2Sent2: true
       }
     },
     methods: {
       emailDCS() {
         this.snackbar = true;
-        let appointmentImportancy = 
-        this.appointmentImportancy? this.appointmentImportancy : "Nie sprecyzowano ważności spotkania" ;
+        let appointmentImportancy =
+          this.appointmentImportancy ? this.appointmentImportancy : "Nie sprecyzowano ważności spotkania";
 
-        let appointmentTime = 
-        this.appointmentTime? this.appointmentTime : "Nie podano kiedy";
-        
+        let appointmentTime =
+          this.appointmentTime ? this.appointmentTime : "Nie podano kiedy";
+
         let appointmentDuration =
-         this.appointmentDuration? this.appointmentDuration: "Nie podano na jak długo";
-        let appointmentMessage = 
-        this.appointmentMessage? this.appointmentMessage : "";
-        this.$store.dispatch('emailDCS', 
-        {appointmentImportancy,
-        appointmentTime, 
-        appointmentDuration, 
-        appointmentMessage})
+          this.appointmentDuration ? this.appointmentDuration : "Nie podano na jak długo";
+        let appointmentMessage =
+          this.appointmentMessage ? this.appointmentMessage : "";
+
+        this.$store.dispatch('emailDCS', {
+            appointmentImportancy,
+            appointmentTime,
+            appointmentDuration,
+            appointmentMessage
+          })
           .then((result) => {
-            console.log(result);
+            console.log(`To otrzymałem na front-endzie na końcu całej procedury: ${result}`);
           })
           .catch((err) => {
-            console.log(err);
+            console.log(`Błąd na końcu, na front-endzie! ${err}`);
           })
       }
     },
     mounted() {
-      //do something after mounting vue instance
       this.information = true;
     },
-    created(){
-      if(!this.$store.state.user.email){
+    created() {
+      if (!this.$store.state.user.email) {
         this.$store.dispatch('checkIfLoggedUser', null);
       }
     }
