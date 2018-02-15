@@ -1,5 +1,5 @@
 <template id="meetWithDCS">
-  <v-container>
+  <v-container class="mainContainer">
     <h3 class="text-xs-center px-4 headline">
       Masz sprawę do komendanta i chcesz się z nim spotkac na dyżurze
     </h3>
@@ -50,7 +50,7 @@
     </v-layout>
 
 
-    <v-layout row>
+    <v-layout row v-if="userNotGuest">
       <v-flex xs-6 offset-xs4>
         <v-btn v-if="formIsValid"  round class="amber" primary  @click="emailDCS">
           Daj znać!
@@ -60,6 +60,12 @@
         </v-btn>
       </v-flex>
     </v-layout>
+    <v-layout v-else row>
+      <v-btn block class="amber" primary disabled @click="emailDCS">
+          Zaloguj się by móc wysłać 
+        </v-btn>
+    </v-layout>
+
 
     <v-snackbar :timeout="timeout" :success="context === 'success'" :info="context === 'info'" :warning="context === 'warning'"
       :error="context === 'error'" :primary="context === 'primary'" :secondary="context === 'secondary'" :multi-line="mode === 'multi-line'"
@@ -148,6 +154,9 @@
       } else{
         return false;
       }
+      },
+      userNotGuest(){
+        return !this.$store.state.isUserAGuest;
       }
     },
     mounted() {
