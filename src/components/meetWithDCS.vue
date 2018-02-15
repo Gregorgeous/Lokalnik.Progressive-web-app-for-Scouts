@@ -30,22 +30,6 @@
             <v-btn flat color="primary" @click="$refs.dialog.save(appointmentTime)">OK</v-btn>
           </v-time-picker>
         </v-dialog>
-
-        <!-- <v-dialog v-model="modal2" lazy>
-          <v-text-field slot="activator" v-model="appointmentTime" label="Chce przyjść o .." append-icon="fa-clock-o" readonly></v-text-field>
-          <v-time-picker v-model="appointmentTime" actions format="24hr">
-            <template slot-scope="{ save, cancel }">
-              <v-card>
-                <v-card-actions>
-                  <v-btn flat @click="cancel()">anuluj</v-btn>
-                  <v-btn flat @click="save()">klik!</v-btn>
-                </v-card-actions>
-              </v-card>
-            </template>
-          </v-time-picker>
-        </v-dialog> -->
-
-
       </v-flex>
     </v-layout>
 
@@ -68,7 +52,10 @@
 
     <v-layout row>
       <v-flex xs-6 offset-xs4>
-        <v-btn round primary dark @click="emailDCS">
+        <v-btn v-if="formIsValid"  round class="amber" primary  @click="emailDCS">
+          Daj znać!
+        </v-btn>
+        <v-btn v-else round class="amber" disabled primary >
           Daj znać!
         </v-btn>
       </v-flex>
@@ -151,6 +138,16 @@
           .catch((err) => {
             console.log(`Błąd na końcu, na front-endzie! ${err}`);
           })
+      }
+    },
+    computed:{
+      formIsValid(){
+      if (this.appointmentImportancy !== null && this.appointmentTime !== null &&
+      this.appointmentDuration !== null){
+        return true;
+      } else{
+        return false;
+      }
       }
     },
     mounted() {
