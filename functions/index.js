@@ -14,13 +14,15 @@ var bodyParser = require('body-parser');
 // exports.helloWorld = functions.https.onRequest((request, response) => {
 //  response.send("Hello from Firebase!");
 // });
+
+// FIXME: improve the security !!!
 let transporter = nodemailer.createTransport({
   host: config.host,
   port: 587,
   secure: false, // true for 465, false for other ports
   auth: {
-    user: config.user, // generated ethereal user
-    pass: config.pass // generated ethereal password
+    user: config.user, 
+    pass: config.pass 
   },
   tls: {
     rejectUnauthorized: false
