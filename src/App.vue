@@ -1,7 +1,7 @@
 <template>
   <v-app>
 
-    <v-toolbar>
+    <v-toolbar >
       <v-toolbar-side-icon
       v-if="showBackBtn" @click="goBack" >
         <i class="fa fa-arrow-left fa-lg" aria-hidden="true" ></i>
@@ -17,10 +17,10 @@
     </v-toolbar-side-icon>
     </v-toolbar>
 
-    <main>
+    <v-content>
         <router-view ></router-view>
         <v-btn v-if="loginButton" @click='goToSignin' round class="myFAB primary elevation-12" dark>Zaloguj się</v-btn>
-    </main>
+    </v-content>
 
   </v-app>
 </template>

@@ -53,7 +53,7 @@
       </v-layout>
       <v-layout row>
         <v-flex class="text-xs-center">
-          <v-btn to='/homepage'> kontynuuj jako gość </v-btn>
+          <v-btn @click="loginAsGuest"> kontynuuj jako gość </v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -104,6 +104,10 @@ export default {
           }
         })
       }
+    },
+    loginAsGuest(){
+      this.$store.commit('setGuestUser');
+      this.$router.push('/homepage');
     }
   },
   computed: {

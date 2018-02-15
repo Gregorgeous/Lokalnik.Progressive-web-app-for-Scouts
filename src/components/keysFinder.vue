@@ -35,7 +35,7 @@
   </div>
 
 
-  <v-bottom-nav  v-model="showBottomNav" class="transparent">
+  <v-bottom-nav absolute  v-model="showBottomNav" class="transparent">
     <v-btn v-if="userHasKeys" @click ='changeKeyHoldingState(false, "----")'>
       <span class="body-2">Już nie mam kluczy </span>
     </v-btn>

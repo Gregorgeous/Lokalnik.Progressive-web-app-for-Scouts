@@ -1,8 +1,13 @@
 <template id="homePage">
   <div class="mainContainer">
-    <h3 class='mt-3 mb-0' id="MainTitle">Wybierz co chcesz zrobić:</h3>
+    <div class="topBar">
+      <h3 class='mt-3 mb-0 topBar__header' id="MainTitle">Wybierz co chcesz zrobić:</h3>
+      <div v-if="userNotGuest" class="topBar__btn" @click='goToUserProfile'>
+        <img class='topBar__btn__svg' src="static/user.svg" alt="">
+        <span class='topBar__btn__span'>Twój profil</span>
+      </div>
+    </div>
     <v-divider></v-divider>
-
     <div class="myContainer">
 
 
@@ -78,17 +83,26 @@
     methods: {
       showBackButtonNow() {
         this.$store.state.backBtnVisible = true;
+      },
+      goToUserProfile() {
+        this.$store.state.backBtnVisible = true;
+        this.$router.push('/user-profile');
       }
     },
-    components: {}
+    computed:{
+      userNotGuest(){
+        return !this.$store.state.isUserAGuest;
+      }
+    }
   }
 
 </script>
 
 
 <style scoped>
-  
-
+  *{
+    box-sizing: border-box;
+  }
   .mainContainer {
     padding: 0 2rem;
     min-height: 100vh;
@@ -100,22 +114,22 @@
     display: flex;
     flex-wrap: wrap;
   }
-  
 
-  .cardDiv{
+
+  .cardDiv {
     padding: 10px;
     align-self: stretch;
   }
 
-  .cardDiv:not(:last-child){
+  .cardDiv:not(:last-child) {
     width: 50%;
   }
 
-  .cardDiv:last-child{
+  .cardDiv:last-child {
     width: 100%;
   }
 
-  .cardDiv:hover .cardDiv__card{
+  .cardDiv:hover .cardDiv__card {
     -webkit-box-shadow: 0px 10px 41px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 10px 41px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 10px 41px 0px rgba(0, 0, 0, 0.301);
@@ -137,15 +151,55 @@
     justify-content: center;
   }
 
+  .topBar {
+    display: flex;
+    align-items:flex-end;
+    margin-top: 1rem;
+  }
+
+  .topBar__header{
+    margin-right: auto;
+  }
+
+  .topBar__btn{
+    cursor: pointer;
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0 3px;
+    border-bottom: #e9b60f solid 2px;
+    transition: all 0.5s;
+  }
+
+  .topBar__btn:hover {
+    border: #e9b60f solid 2px;
+    
+  }
+
+  .topBar__btn__svg {
+    width: 4rem;
+    height: 4rem;
+    margin-right: 4px;
+    border-radius: 50%;
+    border: black 1px solid;
+  }
+
+  .topBar__btn__span{
+    text-align: center;
+    display: inline-block;
+  }
+
   @media only screen and (max-width:400px) {
-    html{
+    html {
       font-size: 62.5%
     }
-    .headline{
+    .headline {
       font-size: 17px;
     }
     .mainContainer {
-    padding: 0;
+      padding: 0;
     }
 
   }

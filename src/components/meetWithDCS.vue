@@ -21,11 +21,20 @@
         <v-subheader>O której chcesz przyjść?</v-subheader>
       </v-flex>
       <v-flex xs8>
-        <v-dialog v-model="modal2" lazy>
+
+        <v-dialog ref="dialog" v-model="modal2" lazy full-width width="270px" :return-value.sync="appointmentTime">
+          <v-text-field slot="activator" label="O której?" v-model="appointmentTime" append-icon="access_time" readonly></v-text-field>
+          <v-time-picker v-model="appointmentTime" actions format="24hr">
+            <v-spacer></v-spacer>
+            <v-btn flat color="primary" @click="modal2 = false">Cancel</v-btn>
+            <v-btn flat color="primary" @click="$refs.dialog.save(appointmentTime)">OK</v-btn>
+          </v-time-picker>
+        </v-dialog>
+
+        <!-- <v-dialog v-model="modal2" lazy>
           <v-text-field slot="activator" v-model="appointmentTime" label="Chce przyjść o .." append-icon="fa-clock-o" readonly></v-text-field>
           <v-time-picker v-model="appointmentTime" actions format="24hr">
             <template slot-scope="{ save, cancel }">
-              <!-- FIXME: find out why it's not currently showing (the production version does) -->
               <v-card>
                 <v-card-actions>
                   <v-btn flat @click="cancel()">anuluj</v-btn>
@@ -34,7 +43,9 @@
               </v-card>
             </template>
           </v-time-picker>
-        </v-dialog>
+        </v-dialog> -->
+
+
       </v-flex>
     </v-layout>
 

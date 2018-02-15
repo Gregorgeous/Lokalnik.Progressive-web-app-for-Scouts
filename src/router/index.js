@@ -10,6 +10,7 @@ import editEvent from '@/components/VenueEventsComponents/editEvent'
 import bookVenue from '@/components/bookVenue'
 import venueCalendar from '@/components/venueCalendar'
 import meetWithDCS from '@/components/meetWithDCS'
+import userProfile from '@/components/userProfile'
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export default new Router({
       path: '/homepage',
       name: 'HomePage',
       component: HomePage
+    },
+    {
+      path: '/user-profile',
+      name: 'userProfile',
+      component: userProfile
     },
     {
       path: '/signin',

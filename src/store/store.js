@@ -51,7 +51,7 @@ export const store = new Vuex.Store({
       state.isUserAGuest = false;
     },
     setGuestUser(state) {
-      state.user = null;
+      // state.user = null;
       state.isUserAGuest = true;
     },
     updateCurrentKeyHolders(state, fetchedKeyHolders) {
@@ -592,6 +592,9 @@ export const store = new Vuex.Store({
       // state.user.hasOwnProperty('')
     },
     filterEventsUserParticipates(state) {
+      if (state.user === null){
+        return;
+      }
       let filteredEvents = [];
 
       function filterEvents(sectionDB) {
@@ -614,6 +617,9 @@ export const store = new Vuex.Store({
       return filteredEvents;
     },
     filterEventsUserIsAnEditor(state) {
+      if (state.user === null) {
+        return;
+      }
       var filteredEditableEvents = [];
 
       function filterEvents(sectionDB) {

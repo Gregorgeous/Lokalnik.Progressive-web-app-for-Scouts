@@ -40,9 +40,8 @@
   :sectionTitlesArray = 'propForCreateEventDialog'></createEventDialog>
 <!--========================-->
 
-
-
     <v-bottom-nav
+    absolute
     :value="isUserAGuest"
     :class="{
       'blue-grey': e2 === 1,

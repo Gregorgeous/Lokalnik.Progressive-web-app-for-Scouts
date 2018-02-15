@@ -3,12 +3,12 @@
 
 
 import Vue from 'vue'
-import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css'
 import App from './App'
 import * as firebase from 'firebase'
 import {store} from './store/store'
 import router from './router'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
 
 Vue.config.productionTip = false
 
@@ -32,8 +32,8 @@ firebase.auth().onAuthStateChanged(function(user){
       el: '#app',
       router,
       store,
-      template: '<App/>',
       components: { App },
+      template: '<App/>'
     })
   }
 })
