@@ -52,6 +52,7 @@ exports.sendMailToDCS = functions.https.onRequest((req, res) => {
       to: config.exampleTo, // list of receivers
       subject: `Spotkanie z: ${req.body.sendersName} ${req.body.sendersSurname}`, // Subject line
       text: `${req.body.sendersName} ${req.body.sendersSurname} prosi o spotkanie. 
+            Data: ${req.body.appointDate}.
             Sprawa jest: ${req.body.appointImportancy}. 
             O której: ${req.body.appointTime}. 
             Na jak długo? ${req.body.appointDuration}. 

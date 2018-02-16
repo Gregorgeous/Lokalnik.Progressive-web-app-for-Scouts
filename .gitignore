@@ -7,3 +7,4 @@ yarn-error.log*
 functions/config.js
 .vscode/
 codealike.json
+src/fbConfig.js

@@ -52,8 +52,8 @@
       </v-card-title>
       <v-card-text>
         <v-container grid-list-md>
-          <v-layout wrap>
-            <v-flex xs12 sm6 md4>
+          <v-layout wrap justify-center>
+            <v-flex xs12>
               <v-text-field
               label='np. "mam klucze do 20 dnia 20.10"'
               v-model="newKeyHoldersNote"></v-text-field>

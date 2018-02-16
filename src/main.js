@@ -9,6 +9,8 @@ import {store} from './store/store'
 import router from './router'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
+// NOTE: Create this file on your own, if pulling from github.
+import fbConfig from './fbConfig'
 
 Vue.config.productionTip = false
 
@@ -18,13 +20,7 @@ Vue.use(Vuetify)
 /* eslint-disable no-new */
 let app;
 
-firebase.initializeApp({
-apiKey: "AIzaSyALvp9YWh-VIIWlxB2w37QYtsl4vfoKlnk",
-authDomain: "lokalnik-app.firebaseapp.com",
-databaseURL: "https://lokalnik-app.firebaseio.com",
-projectId: "lokalnik-app",
-storageBucket: "lokalnik-app.appspot.com"
-})
+firebase.initializeApp(fbConfig)
 
 firebase.auth().onAuthStateChanged(function(user){
   if (!app) {
