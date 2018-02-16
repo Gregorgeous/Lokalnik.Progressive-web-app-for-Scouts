@@ -546,7 +546,7 @@ export const store = new Vuex.Store({
           sendersSurname: state.user.surname,
           sendersEmail: state.user.email,
           appointImportancy: email.appointmentImportancy,
-          appointTime: email.appointmentTime,
+          appointTime: email.appointmentTime, appointDate: email.appointmentDate,
           appointDuration: email.appointmentDuration,
           appointMessage: email.appointmentMessage
         }).then((execStatus)=>{

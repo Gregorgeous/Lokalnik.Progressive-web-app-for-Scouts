@@ -1,7 +1,7 @@
 <template id="meetWithDCS">
   <v-container class="mainContainer">
     <h3 class="text-xs-center px-4 headline">
-      Masz sprawę do komendanta i chcesz się z nim spotkac na dyżurze
+      Masz sprawę do komendanta i chcesz się z nim spotkac na dyżurze (ew. poza godzinami dyżuru komendy)
     </h3>
     <p class="text-xs-center">Daj mu znać w jakiej sprawie i o której chciałbyś przyjść:</p>
     <v-divider></v-divider>
@@ -22,16 +22,35 @@
       </v-flex>
       <v-flex xs8>
 
-        <v-dialog ref="dialog" v-model="modal2" lazy full-width width="270px" :return-value.sync="appointmentTime">
+        <v-dialog ref="dialog1" v-model="modal1" lazy full-width width="290px" :return-value.sync="appointmentTime">
           <v-text-field slot="activator" label="O której?" v-model="appointmentTime" append-icon="access_time" readonly></v-text-field>
           <v-time-picker v-model="appointmentTime" actions format="24hr">
             <v-spacer></v-spacer>
-            <v-btn flat color="primary" @click="modal2 = false">Cancel</v-btn>
-            <v-btn flat color="primary" @click="$refs.dialog.save(appointmentTime)">OK</v-btn>
+            <v-btn flat color="primary" @click="modal1 = false">Cancel</v-btn>
+            <v-btn flat color="primary" @click="$refs.dialog1.save(appointmentTime)">OK</v-btn>
           </v-time-picker>
         </v-dialog>
       </v-flex>
     </v-layout>
+
+    <v-layout row>
+      <v-flex xs4 class="mt-2">
+        <v-subheader>Dzień spotkania?</v-subheader>
+      </v-flex>
+      <v-flex xs8>
+        <v-dialog ref="dialog2" v-model="modal2" lazy full-width width="290px" :return-value.sync="appointmentDate">
+          <v-text-field slot="activator" label="Dzień wydarzenia" v-model="appointmentDate" append-icon="event" readonly></v-text-field>
+          <v-date-picker locale='pl' v-model="appointmentDate" scrollable>
+            <v-spacer></v-spacer>
+            <v-btn flat color="primary" @click="modal2=false">Anuluj</v-btn>
+            <v-btn flat color="primary" @click="$refs.dialog2.save(appointmentDate)">Wybierz</v-btn>
+          </v-date-picker>
+        </v-dialog>
+      </v-flex>
+    </v-layout>
+
+
+
 
     <v-layout row>
       <v-flex xs4 class="mt-2">
@@ -43,6 +62,7 @@
       </v-flex>
     </v-layout>
 
+
     <v-layout row>
       <v-flex xs12>
         <v-text-field name="input-1" label="Tu możesz wstępnie opisać sprawę" v-model="appointmentMessage" textarea></v-text-field>
@@ -52,18 +72,18 @@
 
     <v-layout row v-if="userNotGuest">
       <v-flex xs-6 offset-xs4>
-        <v-btn v-if="formIsValid"  round class="amber" primary  @click="emailDCS">
+        <v-btn v-if="formIsValid" round class="amber" primary @click="emailDCS">
           Daj znać!
         </v-btn>
-        <v-btn v-else round class="amber" disabled primary >
+        <v-btn v-else round class="amber" disabled primary>
           Daj znać!
         </v-btn>
       </v-flex>
     </v-layout>
     <v-layout v-else row>
       <v-btn block class="amber" primary disabled @click="emailDCS">
-          Zaloguj się by móc wysłać 
-        </v-btn>
+        Zaloguj się by móc wysłać
+      </v-btn>
     </v-layout>
 
 
@@ -104,9 +124,11 @@
           'Zajmę tylko chwilę',
           'Trudno powiedzieć'
         ],
+        appointmentDate: null,
         appointmentTime: null,
         appointmentMessage: null,
         menu2: false,
+        modal1: false,
         modal2: false,
         snackbar: false,
         context: 'success',
@@ -127,14 +149,19 @@
         let appointmentTime =
           this.appointmentTime ? this.appointmentTime : "Nie podano kiedy";
 
+        let appointmentDate =
+          this.appointmentDate ? this.appointmentDate : "Nie podano kiedy";
+
         let appointmentDuration =
           this.appointmentDuration ? this.appointmentDuration : "Nie podano na jak długo";
+
         let appointmentMessage =
           this.appointmentMessage ? this.appointmentMessage : "";
 
         this.$store.dispatch('emailDCS', {
             appointmentImportancy,
             appointmentTime,
+            appointmentDate,
             appointmentDuration,
             appointmentMessage
           })
@@ -146,16 +173,15 @@
           })
       }
     },
-    computed:{
-      formIsValid(){
-      if (this.appointmentImportancy !== null && this.appointmentTime !== null &&
-      this.appointmentDuration !== null){
-        return true;
-      } else{
-        return false;
-      }
+    computed: {
+      formIsValid() {
+        if (this.appointmentImportancy !== null && this.appointmentTime !== null && this.appointmentDate !== null && this.appointmentDuration !== null) {
+          return true;
+        } else {
+          return false;
+        }
       },
-      userNotGuest(){
+      userNotGuest() {
         return !this.$store.state.isUserAGuest;
       }
     },

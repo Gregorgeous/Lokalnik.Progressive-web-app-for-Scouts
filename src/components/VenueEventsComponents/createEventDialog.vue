@@ -35,10 +35,10 @@
             </v-subheader>
             <v-dialog ref="dialog1" v-model="modal" lazy full-width width="270px" :return-value.sync="formData.date">
               <v-text-field slot="activator" label="Dzień wydarzenia" v-model="formData.date" prepend-icon="event" readonly></v-text-field>
-              <v-date-picker v-model="formData.date" scrollable>
+              <v-date-picker locale='pl' v-model="formData.date" scrollable>
                 <v-spacer></v-spacer>
-                <v-btn flat color="primary" @click="modal=false">Cancel</v-btn>
-                <v-btn flat color="primary" @click="$refs.dialog1.save(formData.date)">OK</v-btn>
+                <v-btn flat color="primary" @click="modal=false">Anuluj</v-btn>
+                <v-btn flat color="primary" @click="$refs.dialog1.save(formData.date)">Wybierz</v-btn>
               </v-date-picker>
             </v-dialog>
           </v-flex>
@@ -52,8 +52,8 @@
               <v-text-field slot="activator" label="O której chcesz zacząć" v-model="formData.time" prepend-icon="access_time" readonly></v-text-field>
               <v-time-picker v-model="formData.time" actions format="24hr">
                 <v-spacer></v-spacer>
-                <v-btn flat color="primary" @click="modal2=false">Cancel</v-btn>
-                <v-btn flat color="primary" @click="$refs.dialog2.save(formData.time)">OK</v-btn>
+                <v-btn flat color="primary" @click="modal2=false">Anuluj</v-btn>
+                <v-btn flat color="primary" @click="$refs.dialog2.save(formData.time)">Wybierz</v-btn>
               </v-time-picker>
             </v-dialog>
           </v-flex>

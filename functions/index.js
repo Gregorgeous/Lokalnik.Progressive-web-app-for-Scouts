@@ -62,6 +62,9 @@ exports.sendMailToDCS = functions.https.onRequest((req, res) => {
             <hr>
             <ul>
                 <li>
+                Data spotkania (YYYY-MM-DD): <strong><u>${req.body.appointDate}</u></strong> 
+                </li>
+                <li>
                 Jak ważna sprawa: <strong><u>${req.body.appointImportancy}</u></strong> 
                 </li>
                 <li>
