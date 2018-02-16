@@ -260,6 +260,27 @@ export const store = new Vuex.Store({
           }
         )
     },
+    reSignInUser({
+      commit,
+      state
+    }, payload) {
+      commit('changeLoadingState', true);
+      return firebase.auth()
+        .signInWithEmailAndPassword(payload.email, payload.password)
+        .then(
+          user => {
+            commit('changeLoadingState', false);
+            return true;
+          }
+        )
+        .catch(
+          error => {
+            console.log(error);
+            commit('changeLoadingState', false);
+            return false;
+          }
+        )
+    },
     checkIfLoggedUser({
       commit,
       dispatch
@@ -292,6 +313,21 @@ export const store = new Vuex.Store({
           commit('setGuestUser');
           return false;
         }
+      });
+    },
+    resetUsersPassword({commit}, newPassword){
+      commit('changeLoadingState', true);
+      let user = firebase.auth().currentUser;
+      return user.updatePassword(newPassword)
+      .then(() => {
+        commit('changeLoadingState', false);
+        return true;
+        // Update successful.
+      })
+      .catch((error) => {
+        commit('changeLoadingState', false);
+        return false;        
+        // An error happened.
       });
     },
     getCurrentKeyHolders({
