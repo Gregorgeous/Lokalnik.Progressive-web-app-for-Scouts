@@ -15,19 +15,40 @@
                 <v-flex xs5 class="dashboardBox">
                   <p class="dashboardBox__header text-xs-center">Wydarzenia w których bierzesz udział</p>
                   <div class="dashboardBox__hero">
-                    <h1 class="display-3">3</h1>
+                    <div v-if="initialFetchOfUserData">
+                      <v-progress-circular class="amber--text" indeterminate size="40"></v-progress-circular>
+                    </div>
+                    <div v-else>
+                      <h1 class="display-3">
+                        {{compEventsUserParticipates}}
+                      </h1>
+                    </div>
                   </div>
                 </v-flex>
                 <v-flex xs5 class="dashboardBox">
                   <p class="dashboardBox__header text-xs-center">Wydarzenia które prowadzisz</p>
                   <div class="dashboardBox__hero">
-                    <h1 class="display-3">Posiadasz!</h1>
+                    <div v-if="initialFetchOfUserData">
+                      <v-progress-circular class="amber--text" indeterminate size="40"></v-progress-circular>
+                    </div>
+                    <div v-else>
+                      <h1 class="display-3">
+                        {{compEventsUserIsAdmin}}
+                      </h1>
+                    </div>
                   </div>
                 </v-flex>
                 <v-flex xs5 class="dashboardBox">
                   <p class="dashboardBox__header text-xs-center">status kluczy:</p>
                   <div class="dashboardBox__hero">
-                    <h1 class="display-3">Posiadasz!</h1>
+                    <div v-if="initialFetchOfUserData">
+                      <v-progress-circular class="amber--text" indeterminate size="40"></v-progress-circular>
+                    </div>
+                    <div v-else>
+                      <h1 class="display-3">
+                        {{compUserHasKeysStatus}}
+                      </h1>
+                    </div>
                   </div>
                 </v-flex>
               </v-layout>
@@ -57,7 +78,7 @@
               </div>
 
               <!-- ////////////////////////// -->
-              <v-btn block class="error">Usuń konto</v-btn>
+              <v-btn block @click.stop="startUsersAccountDeletionProcedure" class="error">Usuń konto</v-btn>
             </v-card-text>
           </v-card>
 
@@ -72,7 +93,7 @@
         <form @submit.prevent='reSignInUser'>
 
           <v-card-title>
-            <span class="headline">Zaloguj się ponownie, aby zmienić hasło:</span>
+            <span class="headline">Najpierw musisz się ponownie zalogować!</span>
           </v-card-title>
           <v-card-text>
             <v-container grid-list-md>
@@ -108,7 +129,18 @@
       <v-btn flat class='amber--text' @click="passwordChangedSnackBarVisibility = false">Zamknij wiadomość</v-btn>
     </v-snackbar>
 
-
+    <v-dialog v-model="userAccountDeletionDialog" max-width="500">
+      <v-card class="">
+        <v-card-title class="headline">ZONK!</v-card-title>
+        <v-card-text>Aplikacja w fazie testów: na razie jeśli chcesz usunąć konto, musisz napisać w tej sprawie do g.r.fisher.pl@gmail.com
+          :^) </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" flat="flat" @click.native="userAccountDeletionDialog = false"> Eh, co za trol!</v-btn>
+          <v-btn color="red darken-1" flat="flat" @click.native="userAccountDeletionDialog = false"> Hańba, oczekuj maila!</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
   </div>
 </template>
@@ -123,6 +155,9 @@
     template: '#userProfile',
     data() {
       return {
+        eventsUserParticipates: 0,
+        eventsUserIsAdmin: 0,
+        keyHoldingState: false,
         reLoginDialog: false,
         email: '',
         password: '',
@@ -131,7 +166,8 @@
         userReLogged: false,
         newPassword: '',
         newPasswordAgain: '',
-        passwordChangedSnackBarVisibility: false
+        passwordChangedSnackBarVisibility: false,
+        userAccountDeletionDialog: false
       }
     },
     computed: {},
@@ -207,11 +243,59 @@
         }
         // user.updatePassword()
         // console.log(user);
+      },
+      startUsersAccountDeletionProcedure() {
+        if (this.userReLogged !== true) {
+          this.reLoginDialog = true;
+        } else {
+          this.userAccountDeletionDialog = true;
+        }
       }
     },
     computed: {
       isLoading() {
         return this.$store.state.loadingState;
+      },
+      initialFetchOfUserData() {
+        if (!this.$store.state.user.email) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      compEventsUserParticipates() {
+        let user = this.$store.state.user;
+        if (user && user.eventsUserParticipates) {
+          return user.eventsUserParticipates.length;
+        } else{
+          return 0;
+        }
+      },
+      compEventsUserIsAdmin() {
+        let user = this.$store.state.user;
+        if (user && user.eventsEditable) {
+          return user.eventsEditable.length;
+        } else{
+          return 0;
+        }
+      },
+      compUserHasKeysStatus() {
+        let user = this.$store.state.user;
+        if (user && user.hasKeys) {
+          if (user.hasKeys){
+            return "Posiadasz!";
+          } else{
+            return "Nie masz";
+          }
+        } else{
+          return "Nie masz";
+        }
+      }
+
+    },
+    created() {
+      if (!this.$store.state.user.email) {
+        this.$store.dispatch('checkIfLoggedUser', null);
       }
     }
   }
