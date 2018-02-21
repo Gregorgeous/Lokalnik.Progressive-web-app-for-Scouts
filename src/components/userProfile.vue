@@ -146,10 +146,6 @@
 </template>
 
 <script>
-  import {
-    auth
-  } from 'firebase';
-
   export default {
     name: 'userProfile',
     template: '#userProfile',
@@ -220,7 +216,6 @@
         this.errorMessage = '';
       },
       resetUsersPassword() {
-        // Firstly, call fb auth function to check if user's logged recently (fb's requirement).
         if (this.newPassword !== this.newPasswordAgain) {
           this.errorInForm = true;
           this.errorMessage = 'Hasła się nie zgadzają';
