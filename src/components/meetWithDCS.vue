@@ -26,8 +26,8 @@
           <v-text-field slot="activator" label="O której?" v-model="appointmentTime" append-icon="access_time" readonly></v-text-field>
           <v-time-picker v-model="appointmentTime" actions format="24hr">
             <v-spacer></v-spacer>
-            <v-btn flat color="primary" @click="modal1 = false">Cancel</v-btn>
-            <v-btn flat color="primary" @click="$refs.dialog1.save(appointmentTime)">OK</v-btn>
+            <v-btn flat color="primary" @click="modal1 = false">Anuluj</v-btn>
+            <v-btn flat color="primary" @click="$refs.dialog1.save(appointmentTime)">Wybierz</v-btn>
           </v-time-picker>
         </v-dialog>
       </v-flex>
@@ -88,16 +88,16 @@
 
 
     <v-snackbar :timeout="timeout" :success="context === 'success'" :info="context === 'info'" :warning="context === 'warning'"
-      :error="context === 'error'" :primary="context === 'primary'" :secondary="context === 'secondary'" :multi-line="mode === 'multi-line'"
+      auto-height :error="context === 'error'" :primary="context === 'primary'" :secondary="context === 'secondary'" :multi-line="mode === 'multi-line'"
       :vertical="mode === 'vertical'" v-model="snackbar">
       {{ text }}
       <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
     </v-snackbar>
 
-    <v-snackbar top right vertical v-model='information'>
+    <!-- <v-snackbar top right vertical v-model='information'>
       Ta sekcja na razie nie działa ale możesz wypróbować jak będzie funkcjonować :)
       <v-btn flat class='amber--text' @click="information = false">Zamknij wiadomość</v-btn>
-    </v-snackbar>
+    </v-snackbar> -->
 
 
   </v-container>
@@ -133,8 +133,8 @@
         snackbar: false,
         context: 'success',
         mode: '',
-        timeout: 2000,
-        text: 'Dałeś znać Pawłowi - w razie co, skontakuje się z Tobą :) ',
+        timeout: 3000,
+        text: 'Poszło! Dostaniesz maila z potwierdzeniem, jeśli/gdy dojdzie do Pawła',
         // Those 2 below will indicate whether both email to DCS and a callback email have been sent
         email1Sent: true,
         email2Sent2: true
@@ -167,6 +167,11 @@
           })
           .then((result) => {
             console.log(`To otrzymałem na front-endzie na końcu całej procedury: ${result}`);
+            this.appointmentImportancy = null;
+            this.appointmentDuration = null;
+            this.appointmentDate = null;
+            this.appointmentTime = null;
+            this.appointmentMessage = null;
           })
           .catch((err) => {
             console.log(`Błąd na końcu, na front-endzie! ${err}`);
@@ -175,7 +180,8 @@
     },
     computed: {
       formIsValid() {
-        if (this.appointmentImportancy !== null && this.appointmentTime !== null && this.appointmentDate !== null && this.appointmentDuration !== null) {
+        if (this.appointmentImportancy !== null && this.appointmentTime !== null && this.appointmentDate !== null &&
+          this.appointmentDuration !== null) {
           return true;
         } else {
           return false;

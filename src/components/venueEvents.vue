@@ -1,6 +1,14 @@
 <template id="venueEvents">
   <div>
 
+    <v-snackbar top auto-height right vertical v-model='infoPrompt' id="infoPrompt">
+      <p>
+      Ta sekcja na razie jest w fazie rozwoju, ale śmiało, wypróbuj ją ! :) 
+      Będę również wielce wdzięczny za Twój feedback, co należałoby tu dodać/poprawić na grzegorz.rybak@zhp.net.pl 
+      </p>
+      <v-btn flat class='amber--text' @click="infoPrompt = false">Zamknij</v-btn>
+    </v-snackbar>
+
     <v-container>
       <div class="text-xs-center">
         <h3 class=" mt-2 px-4 headline">
@@ -87,6 +95,7 @@ export default {
   },
   data () {
     return {
+      infoPrompt: true,
       msg: 'Lokalnik',
       e2:4,
       sections: [
@@ -195,4 +204,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#infoPrompt{
+  padding-bottom: 40px;
+  margin-bottom: 40px;
+  min-height: 50px;
+}
 </style>

@@ -16,7 +16,7 @@
       </v-flex>
     </div>
     <div v-else>
-      <v-alert type="warning" :value="test">
+      <v-alert type="warning" :value="userOffline">
       Jesteś offline, poniżej ostatnia zapamiętana w pamięci lista osób z kluczami
     </v-alert>
       <div v-if="keyHolders <= 0">
@@ -83,8 +83,7 @@
         msg: 'Lokalnik',
         show: false, // TODO: now it's hard-coded, but we want it true when user's logged in and currently system indicates user has the keys ('currentKeyHolders' state in Store.js)
         dialog: false,
-        newKeyHoldersNote: '',
-        test: false
+        newKeyHoldersNote: ''
       }
     },
     methods: {

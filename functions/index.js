@@ -49,7 +49,7 @@ exports.sendMailToDCS = functions.https.onRequest((req, res) => {
     //  Setup mail config (to, from, mail body etc.)
     let mailOptions = {
       from: config.from, // sender address
-      to: config.exampleTo, // list of receivers
+      to: config.DCSEMailAddress, // list of receivers
       subject: `Spotkanie z: ${req.body.sendersName} ${req.body.sendersSurname}`, // Subject line
       text: `${req.body.sendersName} ${req.body.sendersSurname} prosi o spotkanie. 
             Data: ${req.body.appointDate}.
