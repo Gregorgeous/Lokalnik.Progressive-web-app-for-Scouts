@@ -6,7 +6,7 @@
         <h3 class=" mt-2 px-4 headline">
           Wybierz co chcesz widzieć:
         </h3>
-        <v-menu  :nudge-right='5' bottom open-on-hover offset-y>
+        <v-menu  :nudge-right='5' bottom offset-y>
           <v-btn class="amber purple--text" slot="activator">Wybierz kategorię</v-btn>
           <v-list>
             <v-list-tile v-for="item in sections" :key="item.title" @click="displayTheRightSection(item)">
@@ -52,7 +52,7 @@
       >
       <v-btn dark @click="createEvent" :value="e2 === 1">
         <span style="font-size:10px;">Nowe wydarzenie</span>
-        <v-icon>fa-calendar-plus-o</v-icon>
+        <v-icon>fa-calendar-plus</v-icon>
       </v-btn>
       <v-btn dark
       @click="showAllSections"

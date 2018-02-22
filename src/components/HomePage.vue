@@ -28,7 +28,7 @@
             <h3 class="headline mx-0">Sprawdź wydarzenia w lokalu hufcu</h3>
           </v-card-title>
           <v-card-media class="text-xs-center">
-            <i class="fa fa-comments-o fa-5x mb-1 pb-2" aria-hidden="true"></i>
+            <i class="fa fa-comments fa-5x mb-1 pb-2" aria-hidden="true"></i>
           </v-card-media>
         </v-card>
       </router-link>
@@ -39,7 +39,7 @@
             <h3 class="headline mx-0">Zarezerwuj lokal</h3>
           </v-card-title>
           <v-card-media class="text-xs-center">
-            <i class="fa fa-calendar-plus-o fa-5x mb-1 pb-2" aria-hidden="true"></i>
+            <i class="fa fa-calendar-plus fa-5x mb-1 pb-2" aria-hidden="true"></i>
           </v-card-media>
         </v-card>
       </router-link>
@@ -50,7 +50,7 @@
             <h3 class="headline mx-0">Kalendarz lokalu</h3>
           </v-card-title>
           <v-card-media class="text-xs-center">
-            <i class="fa fa-calendar fa-5x mb-1 pb-2" aria-hidden="true"></i>
+            <i class="fa fa-calendar-alt fa-5x mb-1 pb-2" aria-hidden="true"></i>
           </v-card-media>
         </v-card>
       </router-link>
@@ -61,7 +61,7 @@
             <h3 class="headline mx-0">Mam sprawę do komendanta</h3>
           </v-card-title>
           <v-card-media class="text-xs-center">
-            <i class="fa fa-address-card-o fa-5x mb-1 pb-2" aria-hidden="true"></i>
+            <i class="fa fa-address-card fa-5x mb-1 pb-2" aria-hidden="true"></i>
           </v-card-media>
         </v-card>
       </router-link>

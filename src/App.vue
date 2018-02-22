@@ -5,18 +5,18 @@
       <v-toolbar-side-icon v-if="showBackBtn" @click="goBack">
         <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
       </v-toolbar-side-icon>
-      <v-toolbar-title v-if="!OfflineStatus" class="ml-2">Lokalnik</v-toolbar-title>
+      <v-toolbar-title v-if="!userOffline" class="ml-2">Lokalnik</v-toolbar-title>
       <v-toolbar-title v-else>Jesteś Offline!</v-toolbar-title>
-      <v-toolbar-side-icon v-if="OfflineStatus">
+      <v-toolbar-side-icon v-if="userOffline">
         <i class="fa fa-cloud-download fa-lg" aria-hidden="true"></i>
       </v-toolbar-side-icon>
-      <img class="ml-3 hidden-sm-and-up " v-if="!showBackBtn && !OfflineStatus" style="max-height:80%" src="./assets/zoliborz_logo.png"
+      <img class="ml-3 hidden-sm-and-up " v-if="!showBackBtn && !userOffline" style="max-height:80%" src="./assets/zoliborz_logo.png"
         alt="app-logo">
       <!--IDEA:cheap work-around to show the logo when the way I want it -->
       <img class="ml-3 hidden-xs-only " style="max-height:80%" src="./assets/zoliborz_logo.png" alt="app-logo">
       <v-spacer></v-spacer>
       <v-toolbar-side-icon v-if="logoutButton" @click="signOut">
-        <i class="fa fa-sign-out fa-2x" id="logoutIcon" aria-hidden="true"></i>
+        <i class="fa fa-sign-out-alt fa-2x" id="logoutIcon" aria-hidden="true"></i>
         <span id="logoutSpan">wyloguj</span>
       </v-toolbar-side-icon>
     </v-toolbar>
@@ -30,10 +30,10 @@
     <!-- TODO: if the connection drops, display this snackbar (Ideally only once, then you'll have the indication on the main bar) -->
     <v-snackbar top id="OfflineStatusSnack" vertical v-model='OfflineStatusSnackBar'>
       <div class="inline">
-      <span>
-        Brak połączenia z internetem. Niektóre funkcje mogą nie działać
-      </span>
-      <i class="fa fa-cloud-download noIntSnackIcon fa-lg" aria-hidden="true"></i>
+        <span>
+          Brak połączenia z internetem. Niektóre funkcje mogą nie działać
+        </span>
+        <i class="fa fa-cloud-download noIntSnackIcon fa-lg" aria-hidden="true"></i>
       </div>
       <v-btn flat class='amber--text' @click="OfflineStatusSnackBar = false">Zamknij wiadomość</v-btn>
     </v-snackbar>
@@ -53,6 +53,20 @@
       }
     },
     computed: {
+      connectionStatus() {
+        return navigator.onLine;
+      },
+      userOffline() {
+        if (this.connectionStatus) {
+          console.log("online!");
+          return false
+          }
+        else{
+          console.log("użytkownik offline!");
+          this.OfflineStatusSnackBar = true;
+          return true;
+        } 
+      },
       loginButton() {
         if (this.$route.path == '/signin' || this.$route.path == '/signup') {
           return false;
@@ -106,6 +120,8 @@
         this.$router.replace('/signin');
       }
     },
+    mounted() {
+    },
     created() {
       //do something after creating vue instance
       this.$store.dispatch('booleanLoginState');
@@ -126,10 +142,11 @@
     bottom: 10px;
   }
 
-  .inline{
+  .inline {
     display: flex;
     align-items: center;
   }
+
   /* .noIntSnackIcon {
     display: inline;
   } */

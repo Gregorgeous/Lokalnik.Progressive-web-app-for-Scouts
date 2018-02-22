@@ -11,7 +11,7 @@
         <v-subheader>Jak ważna sprawa?</v-subheader>
       </v-flex>
       <v-flex xs8>
-        <v-select v-bind:items="items" v-model="appointmentImportancy" label="Jak ważne?" single-line auto append-icon="fa-commenting-o "
+        <v-select v-bind:items="items" v-model="appointmentImportancy" label="Jak ważne?" single-line auto append-icon="fa-comment-alt"
           hide-details></v-select>
       </v-flex>
     </v-layout>
@@ -57,7 +57,7 @@
         <v-subheader>Na jak długo?</v-subheader>
       </v-flex>
       <v-flex xs8>
-        <v-select v-bind:items="items2" v-model="appointmentDuration" label="Jak długo?" single-line auto append-icon="fa-handshake-o"
+        <v-select v-bind:items="items2" v-model="appointmentDuration" label="Jak długo?" single-line auto append-icon="fa-handshake"
           hide-details></v-select>
       </v-flex>
     </v-layout>

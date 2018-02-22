@@ -1,6 +1,6 @@
 {
-  "name": "vue-onsen-pwa-app",
-  "short_name": "vue-onsen-pwa-app",
+  "name": "Lokalnik",
+  "short_name": "Lokalnik",
   "icons": [
     {
       "src": "/static/img/icons/android-chrome-192x192.png",

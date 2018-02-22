@@ -10,6 +10,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+// PWA SUPPORT 
+const workboxPlugin = require('workbox-webpack-plugin');
 
 const env = require('../config/prod.env')
 
@@ -115,7 +117,10 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ])
+    ]),
+
+// ----PWA----
+    new workboxPlugin(require('./../workbox-cli-config.js'))
   ]
 })
 
