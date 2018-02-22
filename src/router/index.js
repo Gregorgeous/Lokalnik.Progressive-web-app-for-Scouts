@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import firebase from 'firebase'
+import {store} from './../store/store' 
 import signin from '@/components/signin'
 import signup from '@/components/signup'
 import HomePage from '@/components/HomePage'
@@ -14,17 +16,21 @@ import userProfile from '@/components/userProfile'
 
 Vue.use(Router)
 
-export default new Router({
+
+let router = new Router({
   mode: 'history',
   routes: [
+    // {
+    //   path: '/',
+    //   redirect: '/signin',
+    // },
     {
       path: '/',
-      redirect: '/signin',
-    },
-    {
-      path: '/homepage',
       name: 'HomePage',
-      component: HomePage
+      component: HomePage,
+      meta: {
+        initialAuthCheckup: true
+      }
     },
     {
       path: '/user-profile',
@@ -75,7 +81,30 @@ export default new Router({
       path: '/meetwithdcs',
       name: 'meetWithDCS',
       component: meetWithDCS
+    },
+    // TODO: delete catch-all route after implementing PWA! 
+    {
+      path: '*',
+      name: 'catchall',
+      component: signin
     }
   ],
 
 })
+
+router.beforeEach((to, from, next) => {
+  console.log("jestem w beforeEach");
+  let currentUser = firebase.auth().currentUser;
+  console.log(`currentUser = ${currentUser}`);
+  let guestUser = store.state.isUserAGuest;
+  console.log(`guestUser = ${guestUser}`);  
+  let initialAuthCheckup = to.matched.some(record => record.meta.initialAuthCheckup);
+  // if ( true ) next()
+  // else next('signin')
+  if (initialAuthCheckup && !currentUser && !guestUser) next('signin')
+  else next()
+  // if ((initialAuthCheckup && !currentUser) || (initialAuthCheckup && !guestUser) ) next('login')
+  // else next()
+})
+
+export default router

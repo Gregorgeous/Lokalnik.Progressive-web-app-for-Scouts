@@ -100,14 +100,14 @@ export default {
           else {
             this.errorInForm = false;
             this.errorMessage = '';
-            this.$router.push('/homepage');
+            this.$router.push('/');
           }
         })
       }
     },
     loginAsGuest(){
       this.$store.commit('setGuestUser');
-      this.$router.push('/homepage');
+      this.$router.push('/');
     }
   },
   computed: {

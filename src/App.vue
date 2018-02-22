@@ -84,7 +84,9 @@
       showBackBtn() {
         let route = this.$route.name;
         switch (route) {
+          case '':
           case 'signin':
+          case 'signup':
           case 'editEvent':
           case 'HomePage':
             return false;
@@ -110,14 +112,14 @@
     },
     methods: {
       goBack() {
-        this.$router.go(-1);
+        this.$router.replace('/');
       },
       goToSignin() {
-        this.$router.replace('/signin');
+        this.$router.push('/signin');
       },
       signOut() {
         this.$store.dispatch('signOutUser');
-        this.$router.replace('/signin');
+        this.$router.push('/signin');
       }
     },
     mounted() {

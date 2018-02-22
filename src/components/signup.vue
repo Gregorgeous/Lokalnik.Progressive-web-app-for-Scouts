@@ -55,6 +55,11 @@
             <v-btn type='submit'> Rejestruję się ! ^^ </v-btn>
           </v-flex>
         </v-layout>
+         <v-layout row>
+          <v-flex class="text-xs-center">
+            <v-btn class="info" to='/signin'> &larr; wróć do strony logowania</v-btn>
+          </v-flex>
+        </v-layout>
 
       </form>
 
@@ -94,7 +99,7 @@ export default {
         this.errorInForm = false;
         this.errorMessage = '';
         this.$store.dispatch('SignUpUser', {name:this.name, surname: this.surname, email: this.email, password:this.password})
-        this.$router.push('/homepage');
+        this.$router.push('/');
       }
     }
   },
@@ -106,7 +111,7 @@ export default {
   watch: {
     user(value) {
       if (value !== null && value !== undefined) {
-        this.$router.push('/homepage');
+        this.$router.push('/');
       }
     }
   }

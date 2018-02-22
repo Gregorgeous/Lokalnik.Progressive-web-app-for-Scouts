@@ -2,7 +2,7 @@
   <div class="mainContainer">
     <div class="topBar">
       <h3 class='mt-3 mb-0 topBar__header' id="MainTitle">Wybierz co chcesz zrobić:</h3>
-      <div v-if="userNotGuest" class="topBar__btn" @click='goToUserProfile'>
+      <div v-if="authUser" class="topBar__btn" @click='goToUserProfile'>
         <img class='topBar__btn__svg' src="static/user.svg" alt="">
         <span class='topBar__btn__span'>Twój profil</span>
       </div>
@@ -70,6 +70,7 @@
 </template>
 
 <script>
+  import {auth} from 'firebase';
   export default {
     name: 'homePage',
     template: '#homePage',
@@ -79,7 +80,6 @@
         link: '/keysfinder'
       }
     },
-    computed: {},
     methods: {
       showBackButtonNow() {
         this.$store.state.backBtnVisible = true;
@@ -92,6 +92,9 @@
     computed:{
       userNotGuest(){
         return !this.$store.state.isUserAGuest;
+      },
+      authUser(){
+        return auth().currentUser;
       }
     }
   }
